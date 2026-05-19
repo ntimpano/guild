@@ -3,8 +3,8 @@ name: sdd-apply
 description: "Implement tasks from the change, writing actual code following the specs and design. Trigger: When the orchestrator launches you to implement one or more tasks from a change."
 license: MIT
 metadata:
-  author: gentleman-programming
-  version: "3.0"
+ author: gentleman-programming
+ version: "3.0"
 ---
 
 ## Purpose
@@ -20,7 +20,7 @@ From the orchestrator:
 
 ## Execution and Persistence Contract
 
-Persistence: this skill saves its artifact to ntcli via `ntcli_local_save` (see `_shared/persistence-contract.md` and `_shared/ntcli-convention.md`). Engram is NOT used.
+Persistence: this skill saves its artifact to flint via `flint_local_save` (see `_shared/persistence-contract.md` and `_shared/flint-convention.md`). Engram is NOT used.
 
 ## What to Do
 
@@ -61,7 +61,7 @@ If neither delivery decision nor chain strategy is present, STOP before writing 
 
 Before starting work, check for existing apply-progress:
 
-1. `ntcli_local_recall(query: "sdd/{change-name}/apply-progress")` — use if found
+1. `flint_local_recall(query: "sdd/{change-name}/apply-progress")` — use if found
 2. Parse which tasks are already marked complete
 4. Skip those tasks — start from the first incomplete task
 5. When saving your apply-progress in Step 6, MERGE: include all previously completed tasks PLUS your newly completed tasks in a single combined artifact
@@ -74,16 +74,16 @@ Read the cached testing capabilities to determine implementation mode:
 
 ```
 Read testing capabilities from:
-├── ntcli: ntcli_local_recall(query: "sdd/{project}/testing-capabilities") → use if found
+├── flint: flint_local_recall(query: "sdd/{project}/testing-capabilities") → use if found
 └── Fallback: check project files directly (package.json, go.mod, etc.)
 
 Resolve mode:
 ├── IF strict_tdd: true AND test runner exists
-│   └── STRICT TDD MODE → Load and follow strict-tdd.md module
-│       (read the file: skills/sdd-apply/strict-tdd.md)
+│  └── STRICT TDD MODE → Load and follow strict-tdd.md module
+│    (read the file: skills/sdd-apply/strict-tdd.md)
 │
 ├── IF strict_tdd: false OR no test runner
-│   └── STANDARD MODE → use Step 4 below (no TDD module loaded)
+│  └── STANDARD MODE → use Step 4 below (no TDD module loaded)
 │
 └── Cache the resolved mode for the return summary
 ```
@@ -124,7 +124,7 @@ Update the tasks artifact content — change `- [ ]` to `- [x]` for completed ta
 
 - [x] 1.1 Create `internal/auth/middleware.go` with JWT validation
 - [x] 1.2 Add `AuthConfig` struct to `internal/config/config.go`
-- [ ] 1.3 Add auth routes to `internal/server/server.go`  ← still pending
+- [ ] 1.3 Add auth routes to `internal/server/server.go` ← still pending
 ```
 
 ### Step 6: Persist Progress
@@ -135,7 +135,7 @@ Follow **Section C** from `skills/_shared/sdd-phase-common.md`.
 - artifact: `apply-progress`
 - topic_key: `sdd/{change-name}/apply-progress`
 - type: `architecture`
-- Also update the tasks artifact with `[x]` marks via `ntcli_local_save` upsert.
+- Also update the tasks artifact with `[x]` marks via `flint_local_save` upsert.
 
 #### Merge Protocol
 

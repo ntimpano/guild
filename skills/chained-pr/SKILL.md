@@ -3,8 +3,8 @@ name: chained-pr
 description: "Split large changes into chained or stacked pull requests that protect reviewer focus and stay within Gentle AI's 400-line cognitive review budget. Trigger: when a PR would exceed 400 changed lines, when planning chained PRs, stacked PRs, or reviewable slices."
 license: Apache-2.0
 metadata:
-  author: gentleman-programming
-  version: "1.0"
+ author: gentleman-programming
+ version: "1.0"
 ---
 
 ## When to Use
@@ -60,16 +60,16 @@ When the workload exceeds 400 lines and chained PRs are needed, **ask the user**
 This work exceeds the 400-line review budget. How do you want to split it?
 
 1. Stacked PRs to main
-   Each PR merges to main in order. Fast iteration, fix on the go.
-   Best for: speed-first teams, startups, independent slices.
+  Each PR merges to main in order. Fast iteration, fix on the go.
+  Best for: speed-first teams, startups, independent slices.
 
 2. Feature Branch Chain (with tracker)
-   Child PRs review against their immediate parent branch; the tracker branch accumulates the final feature and is the only branch that merges to main.
-   Best for: rollback control, integration testing before main, coordinated releases.
+  Child PRs review against their immediate parent branch; the tracker branch accumulates the final feature and is the only branch that merges to main.
+  Best for: rollback control, integration testing before main, coordinated releases.
 
 3. size:exception
-   Keep it as a single PR with maintainer approval.
-   Best for: generated code, migrations, vendor diffs where splitting adds noise.
+  Keep it as a single PR with maintainer approval.
+  Best for: generated code, migrations, vendor diffs where splitting adds noise.
 ```
 
 Cache the user's answer for the rest of the session. Do not ask again unless the user changes scope.
@@ -117,10 +117,10 @@ Every child PR must show where it sits in the chain. Mark the current PR with `�
 ```text
 main
  └── #101 Foundation
-      └── #102 Work-unit commits
-           └── 📍 #103 This PR
-                └── #104 Docs
-                     └── #105 Tracker
+   └── #102 Work-unit commits
+      └── 📍 #103 This PR
+        └── #104 Docs
+           └── #105 Tracker
 ```
 
 Pair the diagram with a status table:
@@ -157,28 +157,28 @@ The tracker PR is the map, not the review surface:
 
 ```text
 master/main
- └── feat/my-feature              ← tracker/final integration branch
+ └── feat/my-feature       ← tracker/final integration branch
+   ↑
+   │ PR #1 base: feat/my-feature
+   │
+   └── feat/my-feature-01-core
       ↑
-      │ PR #1 base: feat/my-feature
+      │ PR #2 base: feat/my-feature-01-core
       │
-      └── feat/my-feature-01-core
-            ↑
-            │ PR #2 base: feat/my-feature-01-core
-            │
-            └── feat/my-feature-02-shared
-                  ↑
-                  │ PR #3 base: feat/my-feature-02-shared
-                  │
-                  └── feat/my-feature-03-slice
+      └── feat/my-feature-02-shared
+         ↑
+         │ PR #3 base: feat/my-feature-02-shared
+         │
+         └── feat/my-feature-03-slice
 ```
 
 Example review chain:
 
 ```text
-#40 tracker:   feat/ui-ownership-refactor -> master
+#40 tracker:  feat/ui-ownership-refactor -> master
 #41 foundation: ui-ownership-refactor/foundation -> feat/ui-ownership-refactor
-#42 shared:     ui-ownership-refactor/shared -> ui-ownership-refactor/foundation
-#43 feature:    ui-ownership-refactor/<feature> -> ui-ownership-refactor/shared
+#42 shared:   ui-ownership-refactor/shared -> ui-ownership-refactor/foundation
+#43 feature:  ui-ownership-refactor/<feature> -> ui-ownership-refactor/shared
 ```
 
 ### Steps
@@ -201,8 +201,8 @@ git checkout -b ui-ownership-refactor/foundation
 git push -u origin ui-ownership-refactor/foundation
 
 gh pr create \
-  --base feat/ui-ownership-refactor \
-  --head ui-ownership-refactor/foundation
+ --base feat/ui-ownership-refactor \
+ --head ui-ownership-refactor/foundation
 ```
 
 PR #2 targets PR #1's branch:
@@ -213,8 +213,8 @@ git checkout -b ui-ownership-refactor/shared
 git push -u origin ui-ownership-refactor/shared
 
 gh pr create \
-  --base ui-ownership-refactor/foundation \
-  --head ui-ownership-refactor/shared
+ --base ui-ownership-refactor/foundation \
+ --head ui-ownership-refactor/shared
 ```
 
 PR #3 targets PR #2's branch:
@@ -225,8 +225,8 @@ git checkout -b ui-ownership-refactor/orgs
 git push -u origin ui-ownership-refactor/orgs
 
 gh pr create \
-  --base ui-ownership-refactor/shared \
-  --head ui-ownership-refactor/orgs
+ --base ui-ownership-refactor/shared \
+ --head ui-ownership-refactor/orgs
 ```
 
 ### Diff Hygiene
@@ -248,15 +248,15 @@ main ← #101 (base: main) ← #102 ← #103
 
 # WRONG — later children target tracker and show inflated diffs
 main ← tracker (#105)
-         ├── #101 (base: tracker branch)
-         ├── #102 (base: tracker branch)  # shows #101 again
-         └── #103 (base: tracker branch)  # shows #101 and #102 again
+     ├── #101 (base: tracker branch)
+     ├── #102 (base: tracker branch) # shows #101 again
+     └── #103 (base: tracker branch) # shows #101 and #102 again
 
 # CORRECT — each review targets the immediate parent branch
 main ← tracker (#105)
-         └── #101 (base: tracker branch)
-              └── #102 (base: #101 branch)
-                   └── #103 (base: #102 branch)
+     └── #101 (base: tracker branch)
+       └── #102 (base: #101 branch)
+          └── #103 (base: #102 branch)
 ```
 
 ### Post-merge Rule
@@ -277,8 +277,8 @@ Use this when each PR can land in `main` in order.
 
 ```text
 main <- PR 1: foundation
-          └── PR 2: feature slice built on PR 1
-                └── PR 3: docs/tests built on PR 2
+     └── PR 2: feature slice built on PR 1
+        └── PR 3: docs/tests built on PR 2
 ```
 
 ### Steps
@@ -312,9 +312,9 @@ Insert this extra section into the existing `.github/PULL_REQUEST_TEMPLATE.md` b
 ```text
 main
  └── #NNN Previous PR
-      └── 📍 #NNN This PR
-           └── #NNN Next PR
-                └── #NNN Tracker
+   └── 📍 #NNN This PR
+      └── #NNN Next PR
+        └── #NNN Tracker
 ```
 
 ### Chain Status

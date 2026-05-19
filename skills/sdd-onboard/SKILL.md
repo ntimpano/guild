@@ -3,8 +3,8 @@ name: sdd-onboard
 description: "Guided end-to-end walkthrough of the SDD workflow using the real codebase. Trigger: When the orchestrator launches you to onboard a user through the full SDD cycle."
 license: MIT
 metadata:
-  author: gentleman-programming
-  version: "1.0"
+ author: gentleman-programming
+ version: "1.0"
 ---
 
 ## Purpose
@@ -39,11 +39,11 @@ Criteria for a good onboarding change:
 ├── Real value — something genuinely useful, not a toy
 ├── Spec-worthy — has at least 1 clear requirement and 2 scenarios
 └── Examples:
-    ├── Missing input validation on a form or API endpoint
-    ├── Inconsistent error messages in an auth flow
-    ├── A utility function that could be extracted and reused
-    ├── Missing loading/error state in an async component
-    └── A TODO or FIXME comment in the code with clear intent
+  ├── Missing input validation on a form or API endpoint
+  ├── Inconsistent error messages in an auth flow
+  ├── A utility function that could be extracted and reused
+  ├── Missing loading/error state in an async component
+  └── A TODO or FIXME comment in the code with clear intent
 ```
 
 Present 2-3 options to the user. Let them choose or suggest their own.
@@ -163,7 +163,7 @@ Run `sdd-verify` behavior. Explain the compliance matrix:
 Run `sdd-archive` behavior. Show the result:
 
 ```
-"Done! The change is archived in ntcli under `sdd/{change-name}/archive-report`."
+"Done! The change is archived in flint under `sdd/{change-name}/archive-report`."
 ```
 
 ### Phase 10: Summary
@@ -193,7 +193,7 @@ Small tweaks? Just code. Features, APIs, architecture decisions? SDD first.
 
 **Next steps**:
 - Try /sdd-new for your next real feature
-- Check ntcli artifacts under `sdd/{change-name}/...` — that's your persisted change trail
+- Check flint artifacts under `sdd/{change-name}/...` — that's your persisted change trail
 - Questions? The orchestrator is always available
 ```
 

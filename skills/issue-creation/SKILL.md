@@ -3,8 +3,8 @@ name: issue-creation
 description: "Issue creation workflow for Agent Teams Lite following the issue-first enforcement system. Trigger: When creating a GitHub issue, reporting a bug, or requesting a feature."
 license: Apache-2.0
 metadata:
-  author: gentleman-programming
-  version: "1.0"
+ author: gentleman-programming
+ version: "1.0"
 ---
 
 ## When to Use
@@ -70,8 +70,8 @@ Auto-labels: `bug`, `status:needs-review`
 
 ```bash
 gh issue create --template "bug_report.yml" \
-  --title "fix(scripts): setup.sh fails on zsh with glob error" \
-  --body "
+ --title "fix(scripts): setup.sh fails on zsh with glob error" \
+ --body "
 ### Pre-flight Checks
 - [x] I have searched existing issues and this is not a duplicate
 - [x] I understand this issue needs status:approved before a PR can be opened
@@ -133,8 +133,8 @@ Auto-labels: `enhancement`, `status:needs-review`
 
 ```bash
 gh issue create --template "feature_request.yml" \
-  --title "feat(scripts): add Codex support to setup.sh" \
-  --body "
+ --title "feat(scripts): add Codex support to setup.sh" \
+ --body "
 ### Pre-flight Checks
 - [x] I have searched existing issues and this is not a duplicate
 - [x] I understand this issue needs status:approved before a PR can be opened
@@ -195,10 +195,10 @@ Manually symlinking, but that defeats the purpose of the setup script.
 ## Decision Tree
 
 ```
-Is it a bug?                    → Use Bug Report template
+Is it a bug?          → Use Bug Report template
 Is it a new feature/improvement? → Use Feature Request template
-Is it a question?               → Use Discussions, NOT issues
-Is it a duplicate?              → Link to existing issue, close
+Is it a question?        → Use Discussions, NOT issues
+Is it a duplicate?       → Link to existing issue, close
 ```
 
 ---

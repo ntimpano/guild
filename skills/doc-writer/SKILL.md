@@ -1,12 +1,12 @@
 ---
 name: doc-writer
 description: >
-  Write clear, maintainable technical documentation for code, APIs, modules, and decisions across full-stack projects. Covers inline docs, READMEs, API references, and architectural notes.
-  Trigger: When writing or updating documentation, adding docstrings/JSDoc/godoc, creating READMEs, documenting APIs, or the user asks to document something.
+ Write clear, maintainable technical documentation for code, APIs, modules, and decisions across full-stack projects. Covers inline docs, READMEs, API references, and architectural notes.
+ Trigger: When writing or updating documentation, adding docstrings/JSDoc/godoc, creating READMEs, documenting APIs, or the user asks to document something.
 license: Apache-2.0
 metadata:
-  author: nt-cli
-  version: "1.0"
+ author: nt-cli
+ version: "1.0"
 ---
 
 ## When to Use
@@ -61,21 +61,21 @@ export function retryDelay(attempt: number, baseMs = 500): number
 **Python — Google-style docstrings**
 ```python
 def retry_delay(attempt: int, base_ms: int = 500) -> int:
-    """Calculates retry delay using exponential backoff.
+  """Calculates retry delay using exponential backoff.
 
-    Args:
-        attempt: Zero-based attempt number (0 = first retry).
-        base_ms: Base delay in milliseconds. Defaults to 500.
+  Args:
+    attempt: Zero-based attempt number (0 = first retry).
+    base_ms: Base delay in milliseconds. Defaults to 500.
 
-    Returns:
-        Delay in milliseconds, capped at 30 seconds.
+  Returns:
+    Delay in milliseconds, capped at 30 seconds.
 
-    Example:
-        >>> retry_delay(0)
-        500
-        >>> retry_delay(3)
-        4000
-    """
+  Example:
+    >>> retry_delay(0)
+    500
+    >>> retry_delay(3)
+    4000
+  """
 ```
 
 **Go — godoc**

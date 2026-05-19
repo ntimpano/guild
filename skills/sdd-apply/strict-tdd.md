@@ -20,67 +20,67 @@ For EVERY task assigned to you, follow this cycle strictly:
 ```
 FOR EACH TASK:
 ├── 0. SAFETY NET (only if modifying existing files)
-│   ├── Run existing tests for files being modified
-│   ├── Capture baseline: "{N} tests passing"
-│   ├── If any FAIL → STOP, report as "pre-existing failure"
-│   │   (do NOT fix pre-existing failures — report to orchestrator)
-│   └── This baseline proves you did not break what already worked
+│  ├── Run existing tests for files being modified
+│  ├── Capture baseline: "{N} tests passing"
+│  ├── If any FAIL → STOP, report as "pre-existing failure"
+│  │  (do NOT fix pre-existing failures — report to orchestrator)
+│  └── This baseline proves you did not break what already worked
 │
 ├── 1. UNDERSTAND
-│   ├── Read the task description
-│   ├── Read relevant spec scenarios (these ARE your acceptance criteria)
-│   ├── Read the design decisions (these CONSTRAIN your approach)
-│   ├── Read existing code and test patterns (match the style)
-│   └── Determine test layer (see "Choosing Test Layer" below)
+│  ├── Read the task description
+│  ├── Read relevant spec scenarios (these ARE your acceptance criteria)
+│  ├── Read the design decisions (these CONSTRAIN your approach)
+│  ├── Read existing code and test patterns (match the style)
+│  └── Determine test layer (see "Choosing Test Layer" below)
 │
 ├── 2. RED — Write a failing test FIRST
-│   ├── Write test(s) that describe the expected behavior from the spec
-│   ├── Prefer pure functions where possible (no side effects = easy to test)
-│   ├── The test MUST reference production code that does NOT exist yet
-│   │   (this guarantees failure — no need to execute to confirm)
-│   ├── If the production code/function already exists:
-│   │   └── Write a test for the NEW behavior that is NOT yet implemented
-│   └── GATE: Do NOT proceed to GREEN until the test is written
+│  ├── Write test(s) that describe the expected behavior from the spec
+│  ├── Prefer pure functions where possible (no side effects = easy to test)
+│  ├── The test MUST reference production code that does NOT exist yet
+│  │  (this guarantees failure — no need to execute to confirm)
+│  ├── If the production code/function already exists:
+│  │  └── Write a test for the NEW behavior that is NOT yet implemented
+│  └── GATE: Do NOT proceed to GREEN until the test is written
 │
 ├── 3. GREEN — Write the MINIMUM code to pass
-│   ├── Implement ONLY what the failing test needs
-│   ├── Fake It is VALID here (hardcoded return values are OK)
-│   ├── EXECUTE tests → must PASS
-│   │   ├── ✅ Passed → proceed to TRIANGULATE or REFACTOR
-│   │   └── ❌ Failed → fix the implementation, NOT the test
-│   └── GATE: Do NOT proceed until GREEN is confirmed by execution
+│  ├── Implement ONLY what the failing test needs
+│  ├── Fake It is VALID here (hardcoded return values are OK)
+│  ├── EXECUTE tests → must PASS
+│  │  ├── ✅ Passed → proceed to TRIANGULATE or REFACTOR
+│  │  └── ❌ Failed → fix the implementation, NOT the test
+│  └── GATE: Do NOT proceed until GREEN is confirmed by execution
 │
 ├── 4. TRIANGULATE (MANDATORY for most tasks)
-│   ├── DEFAULT: triangulation is REQUIRED. You need a compelling reason to skip it.
-│   ├── Add a second test case with DIFFERENT inputs/expected outputs
-│   ├── EXECUTE tests → if Fake It breaks (hardcoded no longer works):
-│   │   └── Generalize to real logic (this is the whole point)
-│   ├── Repeat until ALL spec scenarios for this task are covered
-│   ├── Each triangulation pass: write test → run → fix implementation
-│   ├── MINIMUM: at least 2 test cases per behavior (happy path + one edge case)
-│   │   ├── One test with data that produces a NON-EMPTY/NON-TRIVIAL result
-│   │   └── One test with data that exercises a DIFFERENT code path
-│   ├── WATCH OUT for GREEN that passes trivially:
-│   │   ├── If your test passes because the component/element isn't rendered → NOT a real GREEN
-│   │   ├── If your test passes because a loop iterates 0 times → NOT a real GREEN
-│   │   ├── If your test passes because the setup doesn't trigger the code path → NOT a real GREEN
-│   │   └── A real GREEN means: production code RAN and produced the expected output
-│   ├── Skip triangulation ONLY when ALL of these are true:
-│   │   ├── The task is purely structural (config file, constant definition, type export)
-│   │   ├── There is literally ONE possible output (no branching, no logic)
-│   │   └── You explicitly note "Triangulation skipped: {reason}" in the evidence table
-│   └── GATE: All spec scenarios for this task must have tests before REFACTOR
+│  ├── DEFAULT: triangulation is REQUIRED. You need a compelling reason to skip it.
+│  ├── Add a second test case with DIFFERENT inputs/expected outputs
+│  ├── EXECUTE tests → if Fake It breaks (hardcoded no longer works):
+│  │  └── Generalize to real logic (this is the whole point)
+│  ├── Repeat until ALL spec scenarios for this task are covered
+│  ├── Each triangulation pass: write test → run → fix implementation
+│  ├── MINIMUM: at least 2 test cases per behavior (happy path + one edge case)
+│  │  ├── One test with data that produces a NON-EMPTY/NON-TRIVIAL result
+│  │  └── One test with data that exercises a DIFFERENT code path
+│  ├── WATCH OUT for GREEN that passes trivially:
+│  │  ├── If your test passes because the component/element isn't rendered → NOT a real GREEN
+│  │  ├── If your test passes because a loop iterates 0 times → NOT a real GREEN
+│  │  ├── If your test passes because the setup doesn't trigger the code path → NOT a real GREEN
+│  │  └── A real GREEN means: production code RAN and produced the expected output
+│  ├── Skip triangulation ONLY when ALL of these are true:
+│  │  ├── The task is purely structural (config file, constant definition, type export)
+│  │  ├── There is literally ONE possible output (no branching, no logic)
+│  │  └── You explicitly note "Triangulation skipped: {reason}" in the evidence table
+│  └── GATE: All spec scenarios for this task must have tests before REFACTOR
 │
 ├── 5. REFACTOR — Improve without changing behavior
-│   ├── Extract constants (eliminate magic numbers)
-│   ├── Extract functions (reduce cyclomatic complexity)
-│   ├── Improve naming, remove duplication
-│   ├── Push toward pure functions where feasible
-│   ├── Apply Boy Scout Rule: leave code cleaner than you found it
-│   ├── EXECUTE tests after EACH refactoring step → must STILL PASS
-│   │   ├── ✅ Still passing → refactoring is safe, continue
-│   │   └── ❌ Failed → REVERT that refactoring step, try smaller
-│   └── GATE: Tests green after EVERY refactoring change
+│  ├── Extract constants (eliminate magic numbers)
+│  ├── Extract functions (reduce cyclomatic complexity)
+│  ├── Improve naming, remove duplication
+│  ├── Push toward pure functions where feasible
+│  ├── Apply Boy Scout Rule: leave code cleaner than you found it
+│  ├── EXECUTE tests after EACH refactoring step → must STILL PASS
+│  │  ├── ✅ Still passing → refactoring is safe, continue
+│  │  └── ❌ Failed → REVERT that refactoring step, try smaller
+│  └── GATE: Tests green after EVERY refactoring change
 │
 ├── 6. Mark task complete [x]
 └── 7. Note any deviations or issues discovered
@@ -93,20 +93,20 @@ Based on the testing capabilities cached in Engram (`sdd/{project}/testing-capab
 ```
 Determine test layer by WHAT the task does:
 ├── Pure logic, utility function, calculation, data transformation
-│   └── Unit test (always available if test runner exists)
+│  └── Unit test (always available if test runner exists)
 │
 ├── Component rendering, user interaction, state changes
-│   ├── IF integration tools available → Integration test
-│   └── IF NOT → Unit test with mocks (degrade gracefully)
+│  ├── IF integration tools available → Integration test
+│  └── IF NOT → Unit test with mocks (degrade gracefully)
 │
 ├── Multi-component flow, API interaction, context/provider behavior
-│   ├── IF integration tools available → Integration test
-│   └── IF NOT → Unit test with mocks
+│  ├── IF integration tools available → Integration test
+│  └── IF NOT → Unit test with mocks
 │
 ├── Critical business flow, full user journey, cross-page navigation
-│   ├── IF E2E tools available → E2E test
-│   ├── IF NOT but integration available → Integration test
-│   └── IF neither → Unit test (degrade gracefully)
+│  ├── IF E2E tools available → E2E test
+│  ├── IF NOT but integration available → Integration test
+│  └── IF neither → Unit test (degrade gracefully)
 │
 └── Default: Unit test (always the fallback)
 ```
@@ -119,15 +119,15 @@ Detect the test runner from the cached testing capabilities:
 
 ```
 Read test command from:
-├── Cached capabilities (ntcli `sdd-init/{project}`) → test_runner.command (fastest — already detected)
+├── Cached capabilities (flint `sdd-init/{project}`) → test_runner.command (fastest — already detected)
 └── Fallback: detect from package.json/pyproject.toml/go.mod
 
 When executing tests during TDD:
 ├── Run ONLY the relevant test file, not the entire suite
-│   ├── JS/TS: {runner} {test-file-path} (e.g., pnpm vitest run src/utils/tax.test.ts)
-│   ├── Python: pytest {test-file-path}
-│   ├── Go: go test ./{package}/... -run {TestName}
-│   └── Adapt to the runner's CLI
+│  ├── JS/TS: {runner} {test-file-path} (e.g., pnpm vitest run src/utils/tax.test.ts)
+│  ├── Python: pytest {test-file-path}
+│  ├── Go: go test ./{package}/... -run {TestName}
+│  └── Adapt to the runner's CLI
 ├── This keeps the cycle FAST
 └── Full suite runs happen in sdd-verify, not here
 ```
@@ -139,14 +139,14 @@ When writing production code in GREEN/TRIANGULATE steps, prefer pure functions:
 ```
 ✅ PREFER (pure — easy to test):
 function calculateDiscount(price: number, quantity: number): number {
-  return quantity >= 5 ? price * quantity * 0.1 : 0
+ return quantity >= 5 ? price * quantity * 0.1 : 0
 }
 
 ❌ AVOID (impure — hard to test):
 function calculateDiscount(item: Item) {
-  globalState.lastDiscount = item.price * 0.1  // side effect
-  updateDOM()                                   // side effect
-  return globalState.lastDiscount
+ globalState.lastDiscount = item.price * 0.1 // side effect
+ updateDOM()                  // side effect
+ return globalState.lastDiscount
 }
 ```
 
@@ -160,18 +160,18 @@ When a task involves REFACTORING existing code (not writing new code):
 BEFORE touching production code:
 ├── 1. Identify existing behavior to preserve
 ├── 2. Write "approval tests" that capture current behavior:
-│   ├── Call the function with known inputs
-│   ├── Assert the CURRENT outputs (even if ugly or wrong)
-│   └── These tests document what the code does NOW
+│  ├── Call the function with known inputs
+│  ├── Assert the CURRENT outputs (even if ugly or wrong)
+│  └── These tests document what the code does NOW
 ├── 3. Run approval tests → must PASS (they describe current reality)
 ├── 4. NOW refactor the production code
 ├── 5. Run approval tests again → must STILL PASS
-│   ├── ✅ Passing → refactoring preserved behavior
-│   └── ❌ Failing → refactoring broke something, revert
+│  ├── ✅ Passing → refactoring preserved behavior
+│  └── ❌ Failing → refactoring broke something, revert
 └── 6. If the spec says behavior should CHANGE:
-    ├── Update the approval test to reflect NEW expected behavior
-    ├── Run → test FAILS (RED — new behavior not implemented yet)
-    └── Implement new behavior → GREEN
+  ├── Update the approval test to reflect NEW expected behavior
+  ├── Run → test FAILS (RED — new behavior not implemented yet)
+  └── Implement new behavior → GREEN
 ```
 
 ## Return Summary Extension
@@ -209,32 +209,32 @@ When Strict TDD Mode is active, your return summary MUST include this section:
 
 ```
 # TRIVIAL ASSERTIONS — test proves nothing
-expect(true).toBe(true)              # ❌ Tautology
-expect(false).toBe(false)            # ❌ Tautology
-expect(1).toBe(1)                    # ❌ Tautology — no production code involved
-assert True                          # ❌ Always passes
-assert 1 == 1                        # ❌ Always passes
+expect(true).toBe(true)       # ❌ Tautology
+expect(false).toBe(false)      # ❌ Tautology
+expect(1).toBe(1)          # ❌ Tautology — no production code involved
+assert True             # ❌ Always passes
+assert 1 == 1            # ❌ Always passes
 
 # EMPTY COLLECTION ASSERTIONS without setup context
-expect(result).toEqual([])           # ❌ ONLY valid if you set up conditions for empty
-expect(result).toHaveLength(0)       # ❌ Same — why is it empty? Did production code run?
-assert len(result) == 0              # ❌ Same — prove the emptiness comes from real logic
-assert result == []                  # ❌ Same
+expect(result).toEqual([])      # ❌ ONLY valid if you set up conditions for empty
+expect(result).toHaveLength(0)    # ❌ Same — why is it empty? Did production code run?
+assert len(result) == 0       # ❌ Same — prove the emptiness comes from real logic
+assert result == []         # ❌ Same
 
 # TYPE-ONLY ASSERTIONS — proves existence, not behavior
-expect(result).toBeDefined()         # ❌ Alone is useless — WHAT is the value?
-expect(result).not.toBeNull()        # ❌ Alone is useless — assert the actual value
+expect(result).toBeDefined()     # ❌ Alone is useless — WHAT is the value?
+expect(result).not.toBeNull()    # ❌ Alone is useless — assert the actual value
 expect(typeof result).toBe('object') # ❌ Alone is useless — what does the object contain?
-assert result is not None            # ❌ Alone — assert what result actually IS
+assert result is not None      # ❌ Alone — assert what result actually IS
 
 # GHOST LOOP — assertion inside a loop that iterates 0 times
-const items = screen.queryAllByTestId("item");  // returns []
+const items = screen.queryAllByTestId("item"); // returns []
 for (const item of items) {
-  expect(item).toHaveTextContent("value");       # ❌ NEVER EXECUTES — loop body is dead code
+ expect(item).toHaveTextContent("value");    # ❌ NEVER EXECUTES — loop body is dead code
 }
 # FIX: assert the collection is non-empty FIRST, or set up data so it IS non-empty:
-expect(items).toHaveLength(3);                   # ✅ Proves items exist
-for (const item of items) { ... }                # ✅ Now the loop actually runs
+expect(items).toHaveLength(3);          # ✅ Proves items exist
+for (const item of items) { ... }        # ✅ Now the loop actually runs
 
 # INCOMPLETE TDD CYCLE — GREEN without TRIANGULATE
 # If your GREEN test passes because the setup doesn't exercise the code path,
@@ -253,11 +253,11 @@ Every test assertion must satisfy ALL of these:
 
 ```
 # ✅ REAL assertions — production code determines the result
-expect(calculateDiscount(100, 10)).toBe(10)       # Real input → real output
-expect(screen.getByText('Welcome, John')).toBeInTheDocument()  # Rendered from data
-assert result[0].status == "FAIL"                  # Specific finding from check execution
-assert response.status_code == 403                 # Real HTTP response from the endpoint
-expect(result).toHaveLength(3)                     # AND you set up exactly 3 items
+expect(calculateDiscount(100, 10)).toBe(10)    # Real input → real output
+expect(screen.getByText('Welcome, John')).toBeInTheDocument() # Rendered from data
+assert result[0].status == "FAIL"         # Specific finding from check execution
+assert response.status_code == 403         # Real HTTP response from the endpoint
+expect(result).toHaveLength(3)           # AND you set up exactly 3 items
 ```
 
 ### Empty Collection Rule
@@ -276,12 +276,12 @@ A test that only renders a component without asserting any output is NOT a valid
 ```
 # ❌ SMOKE TEST ONLY — proves nothing about behavior
 render(<MyComponent data={mockData} />);
-expect(screen.getByTestId("wrapper")).toBeInTheDocument();  # Just proves it rendered
+expect(screen.getByTestId("wrapper")).toBeInTheDocument(); # Just proves it rendered
 
 # ✅ BEHAVIORAL TEST — proves what the component DOES with the data
 render(<MyComponent data={mockData} />);
-expect(screen.getByText("Expected Title")).toBeInTheDocument();  # Verifies output from data
-expect(screen.getByRole("button")).toHaveTextContent("Submit");  # Verifies real content
+expect(screen.getByText("Expected Title")).toBeInTheDocument(); # Verifies output from data
+expect(screen.getByRole("button")).toHaveTextContent("Submit"); # Verifies real content
 ```
 
 "Renders without crash" is a smoke test. It is NOT a unit test, NOT an integration test, and it does NOT count toward TDD coverage. If you need a smoke test, it must be accompanied by real behavioral assertions.
@@ -295,9 +295,9 @@ Mock/assertion ratio guide:
 ├── ≤ 3 mocks for a test file → ✅ Healthy — focused test
 ├── 4–6 mocks → ⚠️ Consider extracting logic to a pure function
 ├── 7+ mocks → ❌ STOP — you are testing at the wrong layer
-│   ├── Extract the logic under test to a PURE FUNCTION and test it without mocks
-│   ├── OR move the test to integration/E2E layer where real dependencies exist
-│   └── NEVER write 10+ mocks to verify a one-line transformation
+│  ├── Extract the logic under test to a PURE FUNCTION and test it without mocks
+│  ├── OR move the test to integration/E2E layer where real dependencies exist
+│  └── NEVER write 10+ mocks to verify a one-line transformation
 ```
 
 **Extract-Before-Mock Rule**: If the behavior you want to test is a data transformation, mapping, filtering, or conditional logic (e.g., `MUTED → FAIL` status conversion), EXTRACT it to a pure function FIRST, then test the pure function directly. No mocks needed.
@@ -314,7 +314,7 @@ expect(screen.getByText("FAIL")).toBeInTheDocument();
 # ✅ GOOD: extract and test the logic directly
 // In production code:
 export function resolveDisplayStatus(status: string, isMuted: boolean): string {
-  return status === "MUTED" ? "FAIL" : status;
+ return status === "MUTED" ? "FAIL" : status;
 }
 
 // In test — ZERO mocks needed:
@@ -334,8 +334,8 @@ expect(element.className).toContain("border-border-error-primary");
 expect(element.style.color).toBe("red");
 
 # ❌ COUPLED TO INTERNALS — breaks when implementation changes
-expect(mockService.mock.calls.length).toBe(3);  # Why 3? Brittle.
-expect(component.state.isLoading).toBe(true);    # Internal state, not behavior.
+expect(mockService.mock.calls.length).toBe(3); # Why 3? Brittle.
+expect(component.state.isLoading).toBe(true);  # Internal state, not behavior.
 
 # ✅ BEHAVIORAL — survives refactors, tests what users see
 expect(screen.getByText("Error: Payment failed")).toBeInTheDocument();

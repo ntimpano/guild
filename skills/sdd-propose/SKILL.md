@@ -3,8 +3,8 @@ name: sdd-propose
 description: "Create a change proposal with intent, scope, and approach. Trigger: When the orchestrator launches you to create or update a proposal for a change."
 license: MIT
 metadata:
-  author: gentleman-programming
-  version: "2.0"
+ author: gentleman-programming
+ version: "2.0"
 ---
 
 ## Purpose
@@ -19,7 +19,7 @@ From the orchestrator:
 
 ## Execution and Persistence Contract
 
-Persistence: this skill saves its artifact to ntcli via `ntcli_local_save` (see `_shared/persistence-contract.md` and `_shared/ntcli-convention.md`). Engram is NOT used.
+Persistence: this skill saves its artifact to flint via `flint_local_save` (see `_shared/persistence-contract.md` and `_shared/flint-convention.md`). Engram is NOT used.
 
 ## What to Do
 
@@ -28,11 +28,11 @@ Follow **Section A** from `skills/_shared/sdd-phase-common.md`.
 
 ### Step 2: Create Change Directory
 
-Do not create filesystem artifact directories. This skill persists `proposal` to ntcli at `sdd/{change-name}/proposal`.
+Do not create filesystem artifact directories. This skill persists `proposal` to flint at `sdd/{change-name}/proposal`.
 
 ### Step 3: Read Existing Specs
 
-If relevant existing artifacts are available in ntcli, read them to understand current behavior that this change might affect.
+If relevant existing artifacts are available in flint, read them to understand current behavior that this change might affect.
 
 ### Step 4: Write proposal.md
 
@@ -63,14 +63,14 @@ Be specific about the user need or technical debt being addressed.}
 
 ### New Capabilities
 <!-- Capabilities being introduced. Each becomes a new capability spec.
-     Use kebab-case names (e.g., user-auth, data-export, api-rate-limiting).
-     Leave empty if no new capabilities. -->
+   Use kebab-case names (e.g., user-auth, data-export, api-rate-limiting).
+   Leave empty if no new capabilities. -->
 - `<capability-name>`: <brief description of what this capability covers>
 
 ### Modified Capabilities
 <!-- Existing capabilities whose REQUIREMENTS are changing (not just implementation).
-     Only list here if spec-level behavior changes. Each needs a delta spec.
-     Use existing capability names. Leave empty if none. -->
+   Only list here if spec-level behavior changes. Each needs a delta spec.
+   Use existing capability names. Leave empty if none. -->
 - `<existing-capability-name>`: <what requirement is changing>
 
 ## Approach
@@ -121,7 +121,7 @@ Return to the orchestrator:
 ## Proposal Created
 
 **Change**: {change-name}
-**Location**: ntcli `sdd/{change-name}/proposal`
+**Location**: flint `sdd/{change-name}/proposal`
 
 ### Summary
 - **Intent**: {one-line summary}
@@ -135,7 +135,7 @@ Ready for specs (sdd-spec) or design (sdd-design).
 
 ## Rules
 
-- If a proposal already exists in ntcli for this change, READ it first and UPDATE it
+- If a proposal already exists in flint for this change, READ it first and UPDATE it
 - Keep the proposal CONCISE - it's a thinking tool, not a novel
 - Every proposal MUST have a rollback plan
 - Every proposal MUST have success criteria

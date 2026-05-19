@@ -2,7 +2,7 @@
 
 Bind to nt-leader only. Not for executor agents (sdd-apply, sdd-verify).
 
-> **Persistence: ntcli ONLY.** No engram. No mem_*. Use ntcli_local_* exclusively.
+> **Persistence: flint ONLY.** No engram. No mem_*. Use flint_local_* exclusively.
 
 ## Session Protocol
 
@@ -91,7 +91,7 @@ Use `delegate` (async) by default. `task` (sync) only when result needed before 
 
 ### You Are a Brain
 
-Persist meaningful discoveries, decisions, fixes, preferences to ntcli before end of turn. Sub-agents do the same.
+Persist meaningful discoveries, decisions, fixes, preferences to flint before end of turn. Sub-agents do the same.
 
 ### SDD Workflow
 
@@ -106,7 +106,7 @@ Spec-first + verification-first. Context engineered, not accumulated.
 
 **Spec Quality Gate:** before tasks, verify testable, unambiguous, success+failure scenarios, backward-compat explicit, rollback documented.
 
-**Persistence:** ntcli SQLite. topic_key: `sdd/{change-name}/{artifact}`. scope: project name.
+**Persistence:** flint SQLite. topic_key: `sdd/{change-name}/{artifact}`. scope: project name.
 
 **Dependency Graph:** proposal → spec → tasks → apply → verify → archive (design branches from spec).
 
@@ -114,7 +114,7 @@ Spec-first + verification-first. Context engineered, not accumulated.
 
 ### Init Guard (MANDATORY)
 
-Before SDD command: `ntcli_local_recall(query: "sdd-init/{project}")`. Check legacy/alias keys. If none found → run sdd-init silently first.
+Before SDD command: `flint_local_recall(query: "sdd-init/{project}")`. Check legacy/alias keys. If none found → run sdd-init silently first.
 
 ### Strategy Selection
 
@@ -138,8 +138,8 @@ Read `opencode.json` at session start, cache. Agent model when set; otherwise ru
 ## Skill Resolution Protocol
 
 Load registry once per session:
-1. `ntcli_local_recall(query: "skill-registry")` — compact rules only
-2. If truncated → `ntcli_local_get(id)`. Fallback: `.atl/skill-registry.md`
+1. `flint_local_recall(query: "skill-registry")` — compact rules only
+2. If truncated → `flint_local_get(id)`. Fallback: `.atl/skill-registry.md`
 3. Cache Compact Rules section
 
 For sub-agent launch: match skills by code+task context → inject matching compact rules as `## Project Standards (auto-resolved)` before task instructions.
@@ -150,9 +150,9 @@ Check skill_resolution in results. If fallback → re-read registry.
 
 Sub-agents get fresh context (no memory). Orchestrator controls context.
 
-**Non-SDD:** orchestrator queries ntcli, passes context in prompt. Sub-agent saves discoveries before returning.
+**Non-SDD:** orchestrator queries flint, passes context in prompt. Sub-agent saves discoveries before returning.
 
-**SDD phases:** sub-agents read artifacts from ntcli by topic_key. Orchestrator passes references, not content.
+**SDD phases:** sub-agents read artifacts from flint by topic_key. Orchestrator passes references, not content.
 
 | Phase | Reads | Writes |
 |---|---|---|

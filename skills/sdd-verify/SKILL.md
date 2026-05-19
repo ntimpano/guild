@@ -3,8 +3,8 @@ name: sdd-verify
 description: "Validate that implementation matches specs, design, and tasks. Trigger: When the orchestrator launches you to verify a completed (or partially completed) change."
 license: MIT
 metadata:
-  author: gentleman-programming
-  version: "3.0"
+ author: gentleman-programming
+ version: "3.0"
 ---
 
 ## Purpose
@@ -20,7 +20,7 @@ From the orchestrator:
 
 ## Execution and Persistence Contract
 
-Persistence: this skill saves its artifact to ntcli via `ntcli_local_save` (see `_shared/persistence-contract.md` and `_shared/ntcli-convention.md`). Engram is NOT used.
+Persistence: this skill saves its artifact to flint via `flint_local_save` (see `_shared/persistence-contract.md` and `_shared/flint-convention.md`). Engram is NOT used.
 
 ## What to Do
 
@@ -33,18 +33,18 @@ Read the cached testing capabilities to determine if Strict TDD verification app
 
 ```
 Read testing capabilities from:
-├── ntcli: ntcli_local_recall(query: "sdd/{project}/testing-capabilities") → use if found
+├── flint: flint_local_recall(query: "sdd/{project}/testing-capabilities") → use if found
 └── Fallback: check project files directly
 
 Resolve mode:
 ├── IF strict_tdd: true AND test runner exists
-│   └── STRICT TDD VERIFY → Load strict-tdd-verify.md module
-│       (read the file: skills/sdd-verify/strict-tdd-verify.md)
-│       This adds Steps 5a, expanded 5/5d, 5e to the verification
+│  └── STRICT TDD VERIFY → Load strict-tdd-verify.md module
+│    (read the file: skills/sdd-verify/strict-tdd-verify.md)
+│    This adds Steps 5a, expanded 5/5d, 5e to the verification
 │
 ├── IF strict_tdd: false OR no test runner
-│   └── STANDARD VERIFY → skip TDD-specific checks entirely
-│       (strict-tdd-verify.md is never loaded — zero tokens)
+│  └── STANDARD VERIFY → skip TDD-specific checks entirely
+│    (strict-tdd-verify.md is never loaded — zero tokens)
 │
 └── Cache the resolved mode for the report header
 ```
@@ -73,10 +73,10 @@ For EACH spec requirement and scenario, search the codebase for structural evide
 FOR EACH REQUIREMENT in specs/:
 ├── Search codebase for implementation evidence
 ├── For each SCENARIO:
-│   ├── Is the GIVEN precondition handled in code?
-│   ├── Is the WHEN action implemented?
-│   ├── Is the THEN outcome produced?
-│   └── Are edge cases covered?
+│  ├── Is the GIVEN precondition handled in code?
+│  ├── Is the WHEN action implemented?
+│  ├── Is the THEN outcome produced?
+│  └── Are edge cases covered?
 └── Flag: CRITICAL if requirement missing, WARNING if scenario partially covered
 ```
 
@@ -170,10 +170,10 @@ IF coverage tool available (from cached capabilities):
 ├── Run: {test_command} --coverage (or equivalent for the test runner)
 ├── Parse coverage report
 ├── IF Strict TDD active → follow expanded Step 5d from strict-tdd-verify.md
-│   (per-file coverage for changed files, uncovered line ranges)
+│  (per-file coverage for changed files, uncovered line ranges)
 ├── IF Standard mode → report total coverage only
-│   ├── Compare total coverage % against threshold (if configured)
-│   └── Flag: WARNING if below threshold
+│  ├── Compare total coverage % against threshold (if configured)
+│  └── Flag: WARNING if below threshold
 └── Report
 
 IF coverage tool NOT available:
@@ -194,15 +194,15 @@ For each scenario from the specs, find which test(s) cover it and what the resul
 
 ```
 FOR EACH REQUIREMENT in specs/:
-  FOR EACH SCENARIO:
-  ├── Find tests that cover this scenario (by name, description, or file path)
-  ├── Look up that test's result from Step 6b output
-  ├── Assign compliance status:
-  │   ├── ✅ COMPLIANT   → test exists AND passed
-  │   ├── ❌ FAILING     → test exists BUT failed (CRITICAL)
-  │   ├── ❌ UNTESTED    → no test found for this scenario (CRITICAL)
-  │   └── ⚠️ PARTIAL    → test exists, passes, but covers only part of the scenario (WARNING)
-  └── Record: requirement, scenario, test file, test name, result
+ FOR EACH SCENARIO:
+ ├── Find tests that cover this scenario (by name, description, or file path)
+ ├── Look up that test's result from Step 6b output
+ ├── Assign compliance status:
+ │  ├── ✅ COMPLIANT  → test exists AND passed
+ │  ├── ❌ FAILING   → test exists BUT failed (CRITICAL)
+ │  ├── ❌ UNTESTED  → no test found for this scenario (CRITICAL)
+ │  └── ⚠️ PARTIAL  → test exists, passes, but covers only part of the scenario (WARNING)
+ └── Record: requirement, scenario, test file, test name, result
 ```
 
 A spec scenario is only considered COMPLIANT when there is a test that passed proving the behavior at runtime. Code existing in the codebase is NOT sufficient evidence.
@@ -327,5 +327,5 @@ Return to the orchestrator the same content you wrote to `verify-report.md`:
 - DO NOT fix any issues — only report them. The orchestrator decides what to do.
 - If Strict TDD is active, load `strict-tdd-verify.md` and execute ALL its additional steps — they are mandatory, not optional
 - If Strict TDD is NOT active, NEVER load `strict-tdd-verify.md` — zero tokens wasted on TDD checks
-- Use cached testing capabilities from ntcli whenever possible — avoid re-detecting
+- Use cached testing capabilities from flint whenever possible — avoid re-detecting
 - Return envelope per **Section D** from `skills/_shared/sdd-phase-common.md`.

@@ -4,15 +4,15 @@ Boilerplate identical across all SDD phase skills. Sub-agents MUST load this alo
 
 Executor boundary: every SDD phase agent is an EXECUTOR, not an orchestrator. Do the phase work yourself. Do NOT launch sub-agents, do NOT call `delegate`/`task`, and do NOT bounce work back unless the phase skill explicitly says to stop and report a blocker.
 
-> **Engram does NOT exist in this stack.** Never call `mem_save`, `mem_search`, `mem_get_observation`, or any `mem_*` tool. The ONLY persistence backend is ntcli local SQLite via the `ntcli_local_*` MCP tools.
+> **Engram does NOT exist in this stack.** Never call `mem_save`, `mem_search`, `mem_get_observation`, or any `mem_*` tool. The ONLY persistence backend is flint local SQLite via the `flint_local_*` MCP tools.
 
 ## A. Skill Loading
 
 1. Check if the orchestrator injected a `## Project Standards (auto-resolved)` block in your launch prompt. If yes, follow those rules — they are pre-digested compact rules from the skill registry. **Do NOT read any SKILL.md files.**
 2. If no Project Standards block was provided, check for `SKILL: Load` instructions. If present, load those exact skill files.
 3. If neither was provided, search for the skill registry as a fallback:
-   a. Read `.atl/skill-registry.md` from the project root if it exists.
-   b. From the registry's **Compact Rules** section, apply rules whose triggers match your current task.
+  a. Read `.atl/skill-registry.md` from the project root if it exists.
+  b. From the registry's **Compact Rules** section, apply rules whose triggers match your current task.
 4. If no registry exists, proceed with your phase skill only.
 
 ## B. Artifact Retrieval
@@ -20,17 +20,17 @@ Executor boundary: every SDD phase agent is an EXECUTOR, not an orchestrator. Do
 For each required artifact, call:
 
 ```
-ntcli_local_recall(query: "sdd/{change-name}/{artifact-type}")
+flint_local_recall(query: "sdd/{change-name}/{artifact-type}")
 ```
 
-Use the content returned. If ntcli returns nothing, the artifact doesn't exist yet — report a blocker. Do NOT try Engram or any other backend.
+Use the content returned. If flint returns nothing, the artifact doesn't exist yet — report a blocker. Do NOT try Engram or any other backend.
 
 **Run all retrievals in parallel** — do NOT search sequentially.
 
-For very large artifacts where `ntcli_local_recall` returns a truncated preview, fetch the full content:
+For very large artifacts where `flint_local_recall` returns a truncated preview, fetch the full content:
 
 ```
-ntcli_local_get(id: {note-id})
+flint_local_get(id: {note-id})
 ```
 
 ## C. Artifact Persistence
@@ -38,12 +38,12 @@ ntcli_local_get(id: {note-id})
 Every phase that produces an artifact MUST persist it. Skipping this BREAKS the pipeline — downstream phases will not find your output.
 
 ```
-ntcli_local_save(
-  title: "sdd/{change-name}/{artifact-type}",
-  topic_key: "sdd/{change-name}/{artifact-type}",
-  type: "architecture",
-  scope: "{project}",
-  content: "{your full artifact markdown}"
+flint_local_save(
+ title: "sdd/{change-name}/{artifact-type}",
+ topic_key: "sdd/{change-name}/{artifact-type}",
+ type: "architecture",
+ scope: "{project}",
+ content: "{your full artifact markdown}"
 )
 ```
 
@@ -66,7 +66,7 @@ Example:
 ```markdown
 **Status**: success
 **Summary**: Proposal created for `{change-name}`. Defined scope, approach, and rollback plan.
-**Artifacts**: ntcli `sdd/{change-name}/proposal`
+**Artifacts**: flint `sdd/{change-name}/proposal`
 **Next**: sdd-spec or sdd-design
 **Risks**: None
 **Skill Resolution**: injected — 3 skills (react-19, typescript, tailwind-4)

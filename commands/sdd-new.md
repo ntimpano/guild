@@ -18,6 +18,6 @@ CONTEXT:
 - Delivery strategy: ask/cache per orchestrator
 
 PERSISTENCE NOTE:
-Sub-agents handle ntcli persistence automatically. Each phase saves with topic_key "sdd/$ARGUMENTS/{type}" via `ntcli_local_save`. Engram is NOT used — there is no other backend, no mode selection.
+Sub-agents handle flint persistence automatically. Each phase saves with topic_key "sdd/$ARGUMENTS/{type}" via `flint_local_save`. Engram is NOT used — there is no other backend, no mode selection.
 
 Read the orchestrator instructions to coordinate this workflow. Do NOT execute phase work inline — delegate to sub-agents.

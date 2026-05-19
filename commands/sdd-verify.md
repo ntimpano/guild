@@ -15,15 +15,15 @@ Verify the active SDD change. Read the spec, design, and tasks artifacts, then v
 
 NTCLI PERSISTENCE (mandatory — Engram does NOT exist):
 Retrieve required artifacts (run in parallel):
-  ntcli_local_recall(query: "sdd/{change-name}/spec") → full spec
-  ntcli_local_recall(query: "sdd/{change-name}/design") → full design
-  ntcli_local_recall(query: "sdd/{change-name}/tasks") → full tasks
-  ntcli_local_recall(query: "sdd/{change-name}/apply-progress") → if present, validate against it
+ flint_local_recall(query: "sdd/{change-name}/spec") → full spec
+ flint_local_recall(query: "sdd/{change-name}/design") → full design
+ flint_local_recall(query: "sdd/{change-name}/tasks") → full tasks
+ flint_local_recall(query: "sdd/{change-name}/apply-progress") → if present, validate against it
 
-If a recall returns a truncated preview for a large artifact, follow up with `ntcli_local_get(id)` for full content.
+If a recall returns a truncated preview for a large artifact, follow up with `flint_local_get(id)` for full content.
 
 Save verification report:
-  ntcli_local_save(title: "sdd/{change-name}/verify-report", topic_key: "sdd/{change-name}/verify-report", type: "architecture", scope: "{project}", content: "{verification report}")
+ flint_local_save(title: "sdd/{change-name}/verify-report", topic_key: "sdd/{change-name}/verify-report", type: "architecture", scope: "{project}", content: "{verification report}")
 
 Do NOT call mem_save or any mem_* tool.
 

@@ -3,8 +3,8 @@ name: skill-creator
 description: "Creates new AI agent skills following the Agent Skills spec. Trigger: When user asks to create a new skill, add agent instructions, or document patterns for AI."
 license: Apache-2.0
 metadata:
-  author: gentleman-programming
-  version: "1.0"
+ author: gentleman-programming
+ version: "1.0"
 ---
 
 ## When to Create a Skill
@@ -26,12 +26,12 @@ Create a skill when:
 
 ```
 skills/{skill-name}/
-├── SKILL.md              # Required - main skill file
-├── assets/               # Optional - templates, schemas, examples
-│   ├── template.py
-│   └── schema.json
-└── references/           # Optional - links to local docs
-    └── docs.md           # Points to docs/developer-guide/*.mdx
+├── SKILL.md       # Required - main skill file
+├── assets/        # Optional - templates, schemas, examples
+│  ├── template.py
+│  └── schema.json
+└── references/      # Optional - links to local docs
+  └── docs.md      # Points to docs/developer-guide/*.mdx
 ```
 
 ---
@@ -42,12 +42,12 @@ skills/{skill-name}/
 ---
 name: {skill-name}
 description: >
-  {One-line description of what this skill does}.
-  Trigger: {When the AI should load this skill}.
+ {One-line description of what this skill does}.
+ Trigger: {When the AI should load this skill}.
 license: Apache-2.0
 metadata:
-  author: gentleman-programming
-  version: "1.0"
+ author: gentleman-programming
+ version: "1.0"
 ---
 
 ## When to Use
@@ -90,11 +90,11 @@ metadata:
 ## Decision: assets/ vs references/
 
 ```
-Need code templates?        → assets/
-Need JSON schemas?          → assets/
-Need example configs?       → assets/
-Link to existing docs?      → references/
-Link to external guides?    → references/ (with local path)
+Need code templates?    → assets/
+Need JSON schemas?     → assets/
+Need example configs?    → assets/
+Link to existing docs?   → references/
+Link to external guides?  → references/ (with local path)
 ```
 
 **Key Rule**: `references/` should point to LOCAL files, not web URLs.

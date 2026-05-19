@@ -3,8 +3,8 @@ name: sdd-spec
 description: "Write specifications with requirements and scenarios (delta specs for changes). Trigger: When the orchestrator launches you to write or update specs for a change."
 license: MIT
 metadata:
-  author: gentleman-programming
-  version: "2.0"
+ author: gentleman-programming
+ version: "2.0"
 ---
 
 ## Purpose
@@ -18,7 +18,7 @@ From the orchestrator:
 
 ## Execution and Persistence Contract
 
-Persistence: this skill saves its artifact to ntcli via `ntcli_local_save` (see `_shared/persistence-contract.md` and `_shared/ntcli-convention.md`). Engram is NOT used.
+Persistence: this skill saves its artifact to flint via `flint_local_save` (see `_shared/persistence-contract.md` and `_shared/flint-convention.md`). Engram is NOT used.
 
 ## What to Do
 
@@ -43,7 +43,7 @@ If the proposal has no Capabilities section (older format), fall back to inferri
 
 ### Step 3: Read Existing Specs
 
-If existing capability specs are available in ntcli, read them to understand CURRENT behavior. Your delta specs describe CHANGES to this behavior.
+If existing capability specs are available in flint, read them to understand CURRENT behavior. Your delta specs describe CHANGES to this behavior.
 
 ### Step 4: Write Delta Specs
 

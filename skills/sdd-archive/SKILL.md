@@ -3,13 +3,13 @@ name: sdd-archive
 description: "Sync delta specs to main specs and archive a completed change. Trigger: When the orchestrator launches you to archive a change after implementation and verification."
 license: MIT
 metadata:
-  author: gentleman-programming
-  version: "2.0"
+ author: gentleman-programming
+ version: "2.0"
 ---
 
 ## Purpose
 
-You are a sub-agent responsible for ARCHIVING. You finalize a completed change by producing an archive report with artifact lineage in ntcli. You complete the SDD cycle.
+You are a sub-agent responsible for ARCHIVING. You finalize a completed change by producing an archive report with artifact lineage in flint. You complete the SDD cycle.
 
 ## What You Receive
 
@@ -18,7 +18,7 @@ From the orchestrator:
 
 ## Execution and Persistence Contract
 
-Persistence: this skill saves its artifact to ntcli via `ntcli_local_save` (see `_shared/persistence-contract.md` and `_shared/ntcli-convention.md`). Engram is NOT used.
+Persistence: this skill saves its artifact to flint via `flint_local_save` (see `_shared/persistence-contract.md` and `_shared/flint-convention.md`). Engram is NOT used.
 
 ## What to Do
 
@@ -27,7 +27,7 @@ Follow **Section A** from `skills/_shared/sdd-phase-common.md`.
 
 ### Step 2: Validate Archive Inputs
 
-Confirm all required artifacts exist in ntcli:
+Confirm all required artifacts exist in flint:
 - `sdd/{change-name}/proposal`
 - `sdd/{change-name}/spec`
 - `sdd/{change-name}/design`
@@ -38,7 +38,7 @@ If any are missing, return `blocked` and list missing topic keys.
 
 ### Step 3: Build Archive Lineage
 
-Prepare an archive lineage section with references to all source topic keys and any related observation IDs returned by ntcli retrieval.
+Prepare an archive lineage section with references to all source topic keys and any related observation IDs returned by flint retrieval.
 
 ### Step 4: Verify Archive Readiness
 
@@ -64,7 +64,7 @@ Return to the orchestrator:
 ## Change Archived
 
 **Change**: {change-name}
-**Archived to**: ntcli `sdd/{change-name}/archive-report`
+**Archived to**: flint `sdd/{change-name}/archive-report`
 
 ### Artifact Lineage
 | Artifact | Topic key | Reference |

@@ -17,18 +17,18 @@ Implement the remaining incomplete tasks for the active SDD change.
 
 NTCLI PERSISTENCE (mandatory — Engram does NOT exist):
 Retrieve required artifacts (run in parallel):
-  ntcli_local_recall(query: "sdd/{change-name}/spec") → spec content
-  ntcli_local_recall(query: "sdd/{change-name}/design") → design content
-  ntcli_local_recall(query: "sdd/{change-name}/tasks") → tasks content (note the id for updates)
-  ntcli_local_recall(query: "sdd/{change-name}/apply-progress") → if found, read previous progress, skip completed tasks, MERGE when saving
+ flint_local_recall(query: "sdd/{change-name}/spec") → spec content
+ flint_local_recall(query: "sdd/{change-name}/design") → design content
+ flint_local_recall(query: "sdd/{change-name}/tasks") → tasks content (note the id for updates)
+ flint_local_recall(query: "sdd/{change-name}/apply-progress") → if found, read previous progress, skip completed tasks, MERGE when saving
 
-If a recall returns a truncated preview for a large artifact, follow up with `ntcli_local_get(id)` for full content.
+If a recall returns a truncated preview for a large artifact, follow up with `flint_local_get(id)` for full content.
 
 Update tasks as you complete them (use the tasks note id):
-  ntcli_local_update(id: {tasks-note-id}, content: "{updated tasks with [x] marks}")
+ flint_local_update(id: {tasks-note-id}, content: "{updated tasks with [x] marks}")
 
 Save progress (upsert by topic_key):
-  ntcli_local_save(title: "sdd/{change-name}/apply-progress", topic_key: "sdd/{change-name}/apply-progress", type: "architecture", scope: "{project}", content: "{progress report}")
+ flint_local_save(title: "sdd/{change-name}/apply-progress", topic_key: "sdd/{change-name}/apply-progress", type: "architecture", scope: "{project}", content: "{progress report}")
 
 Do NOT call mem_save or any mem_* tool.
 

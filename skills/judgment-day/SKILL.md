@@ -3,8 +3,8 @@ name: judgment-day
 description: "Parallel adversarial review protocol that launches two independent blind judge sub-agents simultaneously to review the same target, synthesizes their findings, applies fixes, and re-judges until both pass or escalates after 2 iterations. Trigger: When user says \"judgment day\", \"judgment-day\", \"review adversarial\", \"dual review\", \"doble review\", \"juzgar\", \"que lo juzguen\"."
 license: Apache-2.0
 metadata:
-  author: gentleman-programming
-  version: "1.4"
+ author: gentleman-programming
+ version: "1.4"
 ---
 
 ## When to Use
@@ -21,11 +21,11 @@ metadata:
 
 Follow the **Skill Resolver Protocol** (`_shared/skill-resolver.md`) before launching ANY sub-agent:
 
-1. Obtain the skill registry: call `ntcli_local_recall(query: "skill-registry")` → fallback to `.atl/skill-registry.md` from the project root if nothing returns → skip if none
+1. Obtain the skill registry: call `flint_local_recall(query: "skill-registry")` → fallback to `.atl/skill-registry.md` from the project root if nothing returns → skip if none
 2. Identify the target files/scope — what code will the judges review?
 3. Match relevant skills from the registry's **Compact Rules** by:
-   - **Code context**: file extensions/paths of the target (e.g., `.go` → go-testing; `.tsx` → react-19, typescript)
-   - **Task context**: "review code" → framework/language skills; "create PR" → branch-pr skill
+  - **Code context**: file extensions/paths of the target (e.g., `.go` → go-testing; `.tsx` → react-19, typescript)
+  - **Task context**: "review code" → framework/language skills; "create PR" → branch-pr skill
 4. Build a `## Project Standards (auto-resolved)` block with the matching compact rules
 5. Inject this block into BOTH Judge prompts AND the Fix Agent prompt (identical for all)
 
@@ -46,9 +46,9 @@ This ensures judges review against project-specific standards, not just generic 
 The **orchestrator** (NOT a sub-agent) compares results after both `delegation_read` calls return:
 
 ```
-Confirmed   → found by BOTH agents          → high confidence, fix immediately
-Suspect A   → found ONLY by Judge A         → needs triage
-Suspect B   → found ONLY by Judge B         → needs triage
+Confirmed  → found by BOTH agents     → high confidence, fix immediately
+Suspect A  → found ONLY by Judge A     → needs triage
+Suspect B  → found ONLY by Judge B     → needs triage
 Contradiction → agents DISAGREE on the same thing → flag for manual decision
 ```
 
@@ -59,10 +59,10 @@ Present findings as a structured verdict table (see Output Format).
 Judges MUST classify every WARNING into one of two sub-types:
 
 ```
-WARNING (real)        → Causes a bug, data loss, security hole, or incorrect behavior
-                        in a realistic production scenario. Fix required.
+WARNING (real)    → Causes a bug, data loss, security hole, or incorrect behavior
+            in a realistic production scenario. Fix required.
 WARNING (theoretical) → Requires a contrived scenario, corrupted input, or conditions
-                        that cannot arise through normal usage. Report but do NOT block.
+            that cannot arise through normal usage. Report but do NOT block.
 ```
 
 **How to classify**: ask "Can a normal user, using the tool as intended, trigger this?" If YES → real. If it requires a malicious manifest, renamed home dir, two clicks in <1ms, or Windows volume root edge case → theoretical.
@@ -97,8 +97,8 @@ This prevents the diminishing-returns cycle where each fix round introduces mino
 User asks for "judgment day"
 │
 ├── Target is specific files/feature/component?
-│   ├── YES → continue
-│   └── NO → ask user to specify scope before proceeding
+│  ├── YES → continue
+│  └── NO → ask user to specify scope before proceeding
 │
 ▼
 Resolve skills (Pattern 0): read registry → match by code + task context → build Project Standards block
@@ -110,36 +110,36 @@ Wait for both to complete (delegation_read both)
 Synthesize verdict
 │
 ├── No issues found?
-│   └── JUDGMENT: APPROVED ✅ (stop here)
+│  └── JUDGMENT: APPROVED ✅ (stop here)
 │
 ├── Issues found (confirmed, suspect, or contradictions)?
-│   └── Present verdict table to user
-│       ▼
-│       ASK: "¿Arreglo los issues confirmados? / Fix confirmed issues?"
-│       ▼
-│       ├── User says YES → Delegate Fix Agent with confirmed issues list
-│       ├── User says NO → JUDGMENT: ESCALATED (user chose not to fix)
-│       └── User gives specific feedback → adjust fix list accordingly
-│       ▼
-│       Wait for Fix Agent to complete
-│       ▼
-│       Re-launch Judge A + Judge B in parallel (Round 2)
-│       ▼
-│       Synthesize verdict
-│       │
-│       ├── Clean → JUDGMENT: APPROVED ✅
-│       │
-│       └── Still issues → Delegate Fix Agent again (Round 3 / iteration 2)
-│           ▼
-│           Re-launch Judge A + Judge B in parallel (Round 3)
-│           ▼
-│           Synthesize verdict
-│           │
-│           ├── Clean → JUDGMENT: APPROVED ✅
-│           └── Still issues → ASK USER: "Issues remain after 2 iterations. Continue iterating?"
-            │
-            ├── User says YES → repeat fix + judge cycle (no limit)
-            └── User says NO → JUDGMENT: ESCALATED ⚠️ (report to user)
+│  └── Present verdict table to user
+│    ▼
+│    ASK: "¿Arreglo los issues confirmados? / Fix confirmed issues?"
+│    ▼
+│    ├── User says YES → Delegate Fix Agent with confirmed issues list
+│    ├── User says NO → JUDGMENT: ESCALATED (user chose not to fix)
+│    └── User gives specific feedback → adjust fix list accordingly
+│    ▼
+│    Wait for Fix Agent to complete
+│    ▼
+│    Re-launch Judge A + Judge B in parallel (Round 2)
+│    ▼
+│    Synthesize verdict
+│    │
+│    ├── Clean → JUDGMENT: APPROVED ✅
+│    │
+│    └── Still issues → Delegate Fix Agent again (Round 3 / iteration 2)
+│      ▼
+│      Re-launch Judge A + Judge B in parallel (Round 3)
+│      ▼
+│      Synthesize verdict
+│      │
+│      ├── Clean → JUDGMENT: APPROVED ✅
+│      └── Still issues → ASK USER: "Issues remain after 2 iterations. Continue iterating?"
+      │
+      ├── User says YES → repeat fix + judge cycle (no limit)
+      └── User says NO → JUDGMENT: ESCALATED ⚠️ (report to user)
 ```
 
 ---

@@ -1,10 +1,10 @@
 ---
 name: skill-registry
-description: "Create or update the skill registry for the current project. Scans user skills and project conventions, writes .atl/skill-registry.md, and saves to ntcli. Trigger: When user says \"update skills\", \"skill registry\", \"actualizar skills\", \"update registry\", or after installing/removing skills."
+description: "Create or update the skill registry for the current project. Scans user skills and project conventions, writes .atl/skill-registry.md, and saves to flint. Trigger: When user says \"update skills\", \"skill registry\", \"actualizar skills\", \"update registry\", or after installing/removing skills."
 license: MIT
 metadata:
-  author: gentleman-programming
-  version: "1.0"
+ author: gentleman-programming
+ version: "1.0"
 ---
 
 ## Purpose
@@ -26,27 +26,27 @@ This is the foundation of the **Skill Resolver Protocol** (see `_shared/skill-re
 
 1. Glob for `*/SKILL.md` files across ALL known skill directories. Check every path below — scan ALL that exist, not just the first match:
 
-   **User-level (global skills):**
-   - `~/.claude/skills/` — Claude Code
-   - `~/.config/opencode/skills/` — OpenCode
-   - `~/.gemini/skills/` — Gemini CLI
-   - `~/.cursor/skills/` — Cursor
-   - `~/.copilot/skills/` — VS Code Copilot
-   - The parent directory of this skill file (catch-all for any tool)
+  **User-level (global skills):**
+  - `~/.claude/skills/` — Claude Code
+  - `~/.config/opencode/skills/` — OpenCode
+  - `~/.gemini/skills/` — Gemini CLI
+  - `~/.cursor/skills/` — Cursor
+  - `~/.copilot/skills/` — VS Code Copilot
+  - The parent directory of this skill file (catch-all for any tool)
 
-   **Project-level (workspace skills):**
-   - `{project-root}/.claude/skills/` — Claude Code
-   - `{project-root}/.gemini/skills/` — Gemini CLI
-   - `{project-root}/.agent/skills/` — Antigravity (workspace)
-   - `{project-root}/skills/` — Generic
+  **Project-level (workspace skills):**
+  - `{project-root}/.claude/skills/` — Claude Code
+  - `{project-root}/.gemini/skills/` — Gemini CLI
+  - `{project-root}/.agent/skills/` — Antigravity (workspace)
+  - `{project-root}/skills/` — Generic
 
 2. **SKIP `sdd-*` and `_shared`** — those are SDD workflow skills, not coding/task skills
 3. Also **SKIP `skill-registry`** — that's this skill
 4. **Deduplicate** — if the same skill name appears in multiple locations, keep the project-level version (more specific). If both are user-level, keep the first found.
 5. For each skill found, read the **full SKILL.md** (if a SKILL.md exceeds 200 lines, focus on the frontmatter and Critical Patterns / Rules sections only) to extract:
-   - `name` field (from frontmatter)
-   - `description` field → extract the trigger text (after "Trigger:" in the description)
-   - **Compact rules** — the actionable patterns and constraints (see Step 1b)
+  - `name` field (from frontmatter)
+  - `description` field → extract the trigger text (after "Trigger:" in the description)
+  - **Compact rules** — the actionable patterns and constraints (see Step 1b)
 6. Build a table of: Trigger | Skill Name | Full Path
 
 ### Step 1b: Generate Compact Rules
@@ -82,11 +82,11 @@ Format per skill:
 ### Step 2: Scan Project Conventions
 
 1. Check the project root for convention files. Look for:
-   - `agents.md` or `AGENTS.md`
-   - `CLAUDE.md` (only project-level, not `~/.claude/CLAUDE.md`)
-   - `.cursorrules`
-   - `GEMINI.md`
-   - `copilot-instructions.md`
+  - `agents.md` or `AGENTS.md`
+  - `CLAUDE.md` (only project-level, not `~/.claude/CLAUDE.md`)
+  - `.cursorrules`
+  - `GEMINI.md`
+  - `copilot-instructions.md`
 2. **If an index file is found** (e.g., `agents.md`, `AGENTS.md`): READ its contents and extract all referenced file paths. These index files typically list project conventions with paths — extract every referenced path and include it in the registry table alongside the index file itself.
 3. For non-index files (`.cursorrules`, `CLAUDE.md`, etc.): record the file directly.
 4. The final table should include the index file AND all paths it references — zero extra hops for sub-agents.
@@ -148,15 +148,15 @@ Create the `.atl/` directory in the project root if it doesn't exist, then write
 .atl/skill-registry.md
 ```
 
-#### B. Always save to ntcli (cross-session persistence):
+#### B. Always save to flint (cross-session persistence):
 
 ```
-ntcli_local_save(
-  title: "skill-registry",
-  topic_key: "skill-registry",
-  type: "config",
-  scope: "{project}",
-  content: "{registry markdown from Step 3}"
+flint_local_save(
+ title: "skill-registry",
+ topic_key: "skill-registry",
+ type: "config",
+ scope: "{project}",
+ content: "{registry markdown from Step 3}"
 )
 ```
 
@@ -169,7 +169,7 @@ ntcli_local_save(
 
 **Project**: {project name}
 **Location**: .atl/skill-registry.md
-**ntcli**: saved
+**flint**: saved
 
 ### User Skills Found
 | Skill | Trigger |
@@ -190,7 +190,7 @@ To update after installing/removing skills, run this again.
 ## Rules
 
 - ALWAYS write `.atl/skill-registry.md` regardless of any SDD persistence mode
-- ALWAYS save to ntcli via `ntcli_local_save`
+- ALWAYS save to flint via `flint_local_save`
 - SKIP `sdd-*`, `_shared`, and `skill-registry` directories when scanning
 - Read SKILL.md files (respecting the 200-line guard in Step 1) to generate accurate compact rules — this is a build-time cost, not a runtime cost
 - Compact rules MUST be 5-15 lines per skill — concise, actionable, no fluff

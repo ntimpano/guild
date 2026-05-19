@@ -1,12 +1,12 @@
 ---
 name: security-review
 description: >
-  Perform a structured security review of code changes or modules, covering OWASP Top 10, injection, auth, secrets, and dependency risks across common full-stack languages and frameworks.
-  Trigger: When reviewing code for security issues, auditing a PR, running a security pass, or the user asks for a security check.
+ Perform a structured security review of code changes or modules, covering OWASP Top 10, injection, auth, secrets, and dependency risks across common full-stack languages and frameworks.
+ Trigger: When reviewing code for security issues, auditing a PR, running a security pass, or the user asks for a security check.
 license: Apache-2.0
 metadata:
-  author: nt-cli
-  version: "1.0"
+ author: nt-cli
+ version: "1.0"
 ---
 
 ## When to Use

@@ -3,8 +3,8 @@ name: sdd-tasks
 description: "Break down a change into an implementation task checklist. Trigger: When the orchestrator launches you to create or update the task breakdown for a change."
 license: MIT
 metadata:
-  author: gentleman-programming
-  version: "2.0"
+ author: gentleman-programming
+ version: "2.0"
 ---
 
 ## Purpose
@@ -19,7 +19,7 @@ From the orchestrator:
 
 ## Execution and Persistence Contract
 
-Persistence: this skill saves its artifact to ntcli via `ntcli_local_save` (see `_shared/persistence-contract.md` and `_shared/ntcli-convention.md`). Engram is NOT used.
+Persistence: this skill saves its artifact to flint via `flint_local_save` (see `_shared/persistence-contract.md` and `_shared/flint-convention.md`). Engram is NOT used.
 
 ## What to Do
 
@@ -113,14 +113,14 @@ If the estimate is **High** or likely above 400 lines:
 2. Split tasks into **work units** that can become chained or stacked PRs.
 3. Each suggested PR must have a clear start, clear finish, verification, and autonomous scope.
 4. **Ask the user which chain strategy to use** (this is a team decision):
-   - **Stacked PRs to main** — each PR merges to main in order. Fast iteration, fix on the go. Best for speed-first teams and independent slices.
-   - **Feature Branch Chain** — the feature/tracker branch accumulates the final integration; PR #1 targets the tracker branch, later PRs target the immediate previous PR branch so each child diff stays focused. Only the tracker merges to main. Best for rollback control and coordinated releases.
-   - **size:exception** — keep it as a single PR with maintainer approval. Best for generated code, migrations, or vendor diffs.
+  - **Stacked PRs to main** — each PR merges to main in order. Fast iteration, fix on the go. Best for speed-first teams and independent slices.
+  - **Feature Branch Chain** — the feature/tracker branch accumulates the final integration; PR #1 targets the tracker branch, later PRs target the immediate previous PR branch so each child diff stays focused. Only the tracker merges to main. Best for rollback control and coordinated releases.
+  - **size:exception** — keep it as a single PR with maintainer approval. Best for generated code, migrations, or vendor diffs.
 5. Cache the user's choice and set `Decision needed before apply` from delivery strategy:
-   - `ask-on-risk`: `Yes` — orchestrator asks before apply.
-   - `auto-chain`: `No` — orchestrator proceeds with the first slice using the chosen chain strategy.
-   - `single-pr`: `Yes` — orchestrator must require `size:exception` before apply.
-   - `exception-ok`: `No` — maintainer has accepted `size:exception`.
+  - `ask-on-risk`: `Yes` — orchestrator asks before apply.
+  - `auto-chain`: `No` — orchestrator proceeds with the first slice using the chosen chain strategy.
+  - `single-pr`: `Yes` — orchestrator must require `size:exception` before apply.
+  - `exception-ok`: `No` — maintainer has accepted `size:exception`.
 
 Do not bury this in prose. Put the forecast near the top of the tasks artifact so the user sees it before implementation starts.
 
@@ -141,23 +141,23 @@ For `feature-branch-chain`, suggested work units SHOULD name the intended base b
 
 ```
 Phase 1: Foundation / Infrastructure
-  └─ New types, interfaces, database changes, config
-  └─ Things other tasks depend on
+ └─ New types, interfaces, database changes, config
+ └─ Things other tasks depend on
 
 Phase 2: Core Implementation
-  └─ Main logic, business rules, core behavior
-  └─ The meat of the change
+ └─ Main logic, business rules, core behavior
+ └─ The meat of the change
 
 Phase 3: Integration / Wiring
-  └─ Connect components, routes, UI wiring
-  └─ Make everything work together
+ └─ Connect components, routes, UI wiring
+ └─ Make everything work together
 
 Phase 4: Testing
-  └─ Unit tests, integration tests, e2e tests
-  └─ Verify against spec scenarios
+ └─ Unit tests, integration tests, e2e tests
+ └─ Verify against spec scenarios
 
 Phase 5: Cleanup (if needed)
-  └─ Documentation, remove dead code, polish
+ └─ Documentation, remove dead code, polish
 ```
 
 ### Step 4: Persist Artifact
@@ -177,7 +177,7 @@ Return to the orchestrator:
 ## Tasks Created
 
 **Change**: {change-name}
-**Location**: ntcli `sdd/{change-name}/tasks`
+**Location**: flint `sdd/{change-name}/tasks`
 
 ### Breakdown
 | Phase | Tasks | Focus |

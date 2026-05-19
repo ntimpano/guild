@@ -16,9 +16,9 @@ Explore the topic "$ARGUMENTS" in this codebase. Investigate the current state, 
 
 NTCLI PERSISTENCE (mandatory — Engram does NOT exist):
 Read project context (optional):
-  ntcli_local_recall(query: "sdd-init/{project}") → if found, read full content
+ flint_local_recall(query: "sdd-init/{project}") → if found, read full content
 Save exploration:
-  ntcli_local_save(title: "sdd/$ARGUMENTS/explore", topic_key: "sdd/$ARGUMENTS/explore", type: "architecture", scope: "{project}", content: "{exploration}")
+ flint_local_save(title: "sdd/$ARGUMENTS/explore", topic_key: "sdd/$ARGUMENTS/explore", type: "architecture", scope: "{project}", content: "{exploration}")
 Do NOT call mem_save or any mem_* tool.
 
 This is an exploration only — do NOT create any files or modify code. Just research and return your analysis.

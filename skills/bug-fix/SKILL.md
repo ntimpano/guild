@@ -1,12 +1,12 @@
 ---
 name: bug-fix
 description: >
-  Structured workflow for diagnosing, fixing, and verifying bugs across full-stack codebases. Covers root cause analysis, minimal fix strategy, regression prevention, and documentation of the fix.
-  Trigger: When fixing a bug, investigating an error, diagnosing unexpected behavior, or the user reports something is broken.
+ Structured workflow for diagnosing, fixing, and verifying bugs across full-stack codebases. Covers root cause analysis, minimal fix strategy, regression prevention, and documentation of the fix.
+ Trigger: When fixing a bug, investigating an error, diagnosing unexpected behavior, or the user reports something is broken.
 license: Apache-2.0
 metadata:
-  author: nt-cli
-  version: "1.0"
+ author: nt-cli
+ version: "1.0"
 ---
 
 ## When to Use
@@ -41,13 +41,13 @@ Never jump to a fix without understanding the root cause. Follow this order:
 - Read the full stack trace top-to-bottom. The **first** frame in your code is usually the real source.
 - Distinguish between **symptom** (where it crashes) and **cause** (why it happens).
 - Common root cause categories:
-  - **State mutation**: shared/mutable state modified unexpectedly
-  - **Off-by-one**: index errors, boundary conditions, pagination
-  - **Async/race condition**: unhandled Promise, missing await, concurrent writes
-  - **Type mismatch**: null/undefined, string vs number, wrong shape
-  - **Missing guard**: no nil check, no fallback, no error boundary
-  - **Wrong assumption**: library behavior differs from expectation (check docs)
-  - **Environment difference**: works locally, breaks in CI/prod (env vars, OS, deps)
+ - **State mutation**: shared/mutable state modified unexpectedly
+ - **Off-by-one**: index errors, boundary conditions, pagination
+ - **Async/race condition**: unhandled Promise, missing await, concurrent writes
+ - **Type mismatch**: null/undefined, string vs number, wrong shape
+ - **Missing guard**: no nil check, no fallback, no error boundary
+ - **Wrong assumption**: library behavior differs from expectation (check docs)
+ - **Environment difference**: works locally, breaks in CI/prod (env vars, OS, deps)
 
 ### 3. Minimal Fix Principle
 
@@ -97,7 +97,7 @@ Never jump to a fix without understanding the root cause. Follow this order:
 Always leave a trace of what was found and why it was fixed that way:
 
 - Code comment on the fix if the reason isn't obvious.
-- Save to memory (`ntcli_local_save`) with root cause, file, and what changed.
+- Save to memory (`flint_local_save`) with root cause, file, and what changed.
 - If it's a systemic pattern (e.g., missing null checks everywhere), flag it as a follow-up issue.
 
 ---

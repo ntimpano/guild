@@ -18,7 +18,7 @@ Objetivo: minimizar consumo de tokens manteniendo calidad y trazabilidad.
 ## 2) Reglas anti-derroche
 
 1. No copiar artefactos enteros entre fases; pasar references (`topic_key`, ruta).
-2. Recuperar por query específica (ntcli-first), no búsquedas abiertas.
+2. Recuperar por query específica (flint-first), no búsquedas abiertas.
 3. Ejecutar verify solo cuando apply reporta cambios reales.
 4. Evitar re-runs completos: preferir fix-batches dirigidos por findings.
 5. No usar modelo premium para formateo/documentación mecánica.
@@ -31,5 +31,5 @@ Objetivo: minimizar consumo de tokens manteniendo calidad y trazabilidad.
 
 ## 4) Memoria
 
-- Source of truth y único backend: `ntcli_local_*`.
+- Source of truth y único backend: `flint_local_*`.
 - Engram NO existe en este stack. Nunca llamar `mem_*`.

@@ -15,7 +15,7 @@ Guide the user through a complete SDD cycle using their actual codebase. This is
 
 NTCLI PERSISTENCE (mandatory — Engram does NOT exist):
 Save onboarding progress as you go:
-  ntcli_local_save(title: "sdd-onboard/{project}", topic_key: "sdd-onboard/{project}", type: "architecture", scope: "{project}", content: "{onboarding state}")
+ flint_local_save(title: "sdd-onboard/{project}", topic_key: "sdd-onboard/{project}", type: "architecture", scope: "{project}", content: "{onboarding state}")
 topic_key enables upserts — re-running updates, not duplicates.
 Do NOT call mem_save or any mem_* tool.
 

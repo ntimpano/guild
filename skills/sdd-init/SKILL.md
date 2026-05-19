@@ -1,10 +1,10 @@
 ---
 name: sdd-init
-description: "Initialize Spec-Driven Development context in any project. Detects stack, conventions, testing capabilities, and bootstraps ntcli persistence. Trigger: When user wants to initialize SDD in a project, or says \"sdd init\" or \"iniciar sdd\"."
+description: "Initialize Spec-Driven Development context in any project. Detects stack, conventions, testing capabilities, and bootstraps flint persistence. Trigger: When user wants to initialize SDD in a project, or says \"sdd init\" or \"iniciar sdd\"."
 license: MIT
 metadata:
-  author: gentleman-programming
-  version: "3.0"
+ author: gentleman-programming
+ version: "3.0"
 ---
 
 ## Purpose
@@ -15,7 +15,7 @@ You are an EXECUTOR for this phase, not the orchestrator. Do the initialization 
 
 ## Execution and Persistence Contract
 
-Persistence: this skill saves its artifacts to ntcli via `ntcli_local_save` (see `_shared/persistence-contract.md` and `_shared/ntcli-convention.md`). Engram is NOT used.
+Persistence: this skill saves its artifacts to flint via `flint_local_save` (see `_shared/persistence-contract.md` and `_shared/flint-convention.md`). Engram is NOT used.
 
 ## What to Do
 
@@ -33,41 +33,41 @@ Scan the project for ALL testing infrastructure. This determines what testing mo
 ```
 Detect testing capabilities:
 ├── Test Runner
-│   ├── package.json → devDependencies: vitest, jest, mocha, ava
-│   ├── package.json → scripts.test (what command it runs)
-│   ├── pyproject.toml / pytest.ini / setup.cfg → pytest
-│   ├── go.mod → go test (built-in)
-│   ├── Cargo.toml → cargo test (built-in)
-│   ├── Makefile → make test
-│   └── Result: {framework name, command} or NOT FOUND
+│  ├── package.json → devDependencies: vitest, jest, mocha, ava
+│  ├── package.json → scripts.test (what command it runs)
+│  ├── pyproject.toml / pytest.ini / setup.cfg → pytest
+│  ├── go.mod → go test (built-in)
+│  ├── Cargo.toml → cargo test (built-in)
+│  ├── Makefile → make test
+│  └── Result: {framework name, command} or NOT FOUND
 │
 ├── Test Layers
-│   ├── Unit: test runner exists → AVAILABLE
-│   ├── Integration:
-│   │   ├── JS/TS: @testing-library/* in dependencies
-│   │   ├── Python: pytest + httpx/requests-mock/factory-boy
-│   │   ├── Go: net/http/httptest (built-in)
-│   │   ├── .NET: xUnit/NUnit + WebApplicationFactory
-│   │   └── Result: AVAILABLE or NOT INSTALLED
-│   ├── E2E:
-│   │   ├── playwright, cypress, selenium in dependencies
-│   │   ├── Python: playwright, selenium
-│   │   ├── Go: chromedp
-│   │   └── Result: AVAILABLE or NOT INSTALLED
-│   └── Each layer → record tool name
+│  ├── Unit: test runner exists → AVAILABLE
+│  ├── Integration:
+│  │  ├── JS/TS: @testing-library/* in dependencies
+│  │  ├── Python: pytest + httpx/requests-mock/factory-boy
+│  │  ├── Go: net/http/httptest (built-in)
+│  │  ├── .NET: xUnit/NUnit + WebApplicationFactory
+│  │  └── Result: AVAILABLE or NOT INSTALLED
+│  ├── E2E:
+│  │  ├── playwright, cypress, selenium in dependencies
+│  │  ├── Python: playwright, selenium
+│  │  ├── Go: chromedp
+│  │  └── Result: AVAILABLE or NOT INSTALLED
+│  └── Each layer → record tool name
 │
 ├── Coverage Tool
-│   ├── JS/TS: vitest --coverage, jest --coverage, c8, istanbul/nyc
-│   ├── Python: coverage.py, pytest-cov
-│   ├── Go: go test -cover (built-in)
-│   ├── .NET: coverlet
-│   └── Result: {command} or NOT AVAILABLE
+│  ├── JS/TS: vitest --coverage, jest --coverage, c8, istanbul/nyc
+│  ├── Python: coverage.py, pytest-cov
+│  ├── Go: go test -cover (built-in)
+│  ├── .NET: coverlet
+│  └── Result: {command} or NOT AVAILABLE
 │
 └── Quality Tools
-    ├── Linter: eslint, pylint, ruff, golangci-lint, clippy
-    ├── Type checker: tsc --noEmit, mypy, pyright, go vet
-    ├── Formatter: prettier, black, gofmt, rustfmt
-    └── Each: {command} or NOT AVAILABLE
+  ├── Linter: eslint, pylint, ruff, golangci-lint, clippy
+  ├── Type checker: tsc --noEmit, mypy, pyright, go vet
+  ├── Formatter: prettier, black, gofmt, rustfmt
+  └── Each: {command} or NOT AVAILABLE
 ```
 
 ### Step 3: Resolve STRICT TDD MODE
@@ -76,40 +76,40 @@ Determine whether Strict TDD Mode should be enabled. The resolution follows a pr
 
 ```
 1. Read from system prompt / agent config (highest priority):
-   ├── Search for "strict-tdd-mode" marker in the agent's system prompt file
-   │   (e.g., CLAUDE.md, GEMINI.md, .cursorrules, etc.)
-   ├── If found and says "enabled" → strict_tdd: true
-   ├── If found and says "disabled" → strict_tdd: false
-   └── This is the preference set by the user in the nt-cli runtime profile
+  ├── Search for "strict-tdd-mode" marker in the agent's system prompt file
+  │  (e.g., CLAUDE.md, GEMINI.md, .cursorrules, etc.)
+  ├── If found and says "enabled" → strict_tdd: true
+  ├── If found and says "disabled" → strict_tdd: false
+  └── This is the preference set by the user in the nt-cli runtime profile
 
 2. If nothing found AND test runner was detected in Step 2:
-   ├── Default: strict_tdd: true (enable if the project CAN do TDD)
-   └── This ensures TDD is active even without nt-cli runtime profile setup
+  ├── Default: strict_tdd: true (enable if the project CAN do TDD)
+  └── This ensures TDD is active even without nt-cli runtime profile setup
 
 3. If no test runner detected:
-   ├── strict_tdd: false (cannot enable without test runner)
-   └── Include NOTE in summary: "Strict TDD Mode unavailable — no test runner detected"
+  ├── strict_tdd: false (cannot enable without test runner)
+  └── Include NOTE in summary: "Strict TDD Mode unavailable — no test runner detected"
 ```
 
 **Do NOT ask the user interactively.** The preference is resolved from existing config. If the user wants to change it, they run `nt-cli profile init / profile update` with the TUI.
 
 ### Step 4: Initialize Persistence Backend
 
-Initialize persistence by preparing ntcli artifacts for this project context.
+Initialize persistence by preparing flint artifacts for this project context.
 
 ### Step 5: Persist Testing Capabilities
 
 **This step is MANDATORY — do NOT skip it.**
 
-Persist detected testing capabilities as a separate ntcli observation. This cache prevents re-detection on every `sdd-apply` and `sdd-verify` run.
+Persist detected testing capabilities as a separate flint observation. This cache prevents re-detection on every `sdd-apply` and `sdd-verify` run.
 
 ```
-ntcli_local_save(
-  title: "sdd/{project-name}/testing-capabilities",
-  topic_key: "sdd/{project-name}/testing-capabilities",
-  type: "config",
-  scope: "{project-name}",
-  content: "{testing capabilities markdown — see format below}"
+flint_local_save(
+ title: "sdd/{project-name}/testing-capabilities",
+ topic_key: "sdd/{project-name}/testing-capabilities",
+ type: "config",
+ scope: "{project-name}",
+ content: "{testing capabilities markdown — see format below}"
 )
 ```
 
@@ -151,7 +151,7 @@ Follow the same logic as the `skill-registry` skill (`skills/skill-registry/SKIL
 1. Scan user skills: glob `*/SKILL.md` across ALL known skill directories. **User-level**: `~/.claude/skills/`, `~/.config/opencode/skills/`, `~/.gemini/skills/`, `~/.cursor/skills/`, `~/.copilot/skills/`, parent of this skill file. **Project-level**: `.claude/skills/`, `.gemini/skills/`, `.agent/skills/`, `skills/`. Skip `sdd-*`, `_shared`, `skill-registry`. Deduplicate by name (project-level wins). Read frontmatter triggers.
 2. Scan project conventions: check for `agents.md`, `AGENTS.md`, `CLAUDE.md` (project-level), `.cursorrules`, `GEMINI.md`, `copilot-instructions.md` in the project root. If an index file is found (e.g., `agents.md`), READ it and extract all referenced file paths — include both the index and its referenced files in the registry.
 3. **ALWAYS write `.atl/skill-registry.md`** in the project root (create `.atl/` if needed).
-4. Always save to ntcli: `ntcli_local_save(title: "skill-registry", topic_key: "skill-registry", type: "config", scope: "{project-name}", content: "{registry markdown}")`.
+4. Always save to flint: `flint_local_save(title: "skill-registry", topic_key: "skill-registry", type: "config", scope: "{project-name}", content: "{registry markdown}")`.
 
 See `skills/skill-registry/SKILL.md` for the full registry format and scanning details.
 
@@ -160,12 +160,12 @@ See `skills/skill-registry/SKILL.md` for the full registry format and scanning d
 **This step is MANDATORY — do NOT skip it.**
 
 ```
-ntcli_local_save(
-  title: "sdd-init/{project-name}",
-  topic_key: "sdd-init/{project-name}",
-  type: "architecture",
-  scope: "{project-name}",
-  content: "{your detected project context from Steps 1-7}"
+flint_local_save(
+ title: "sdd-init/{project-name}",
+ topic_key: "sdd-init/{project-name}",
+ type: "architecture",
+ scope: "{project-name}",
+ content: "{your detected project context from Steps 1-7}"
 )
 ```
 
@@ -176,7 +176,7 @@ ntcli_local_save(
 
 **Project**: {project name}
 **Stack**: {detected stack}
-**Persistence**: ntcli
+**Persistence**: flint
 **Strict TDD Mode**: {enabled ✅ / disabled ❌ / unavailable (no test runner)}
 
 ### Testing Capabilities

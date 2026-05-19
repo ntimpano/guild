@@ -7,7 +7,7 @@ Personality is injected by nt-leader per protocol.
 1. Infer the best workflow and first phase from user intent and context.
 2. Never ask: “which workflow do you want?”
 3. Emit one visible signal line before handoff using EXACT format:
-   `→ [workflow/phase] reason`
+  `→ [workflow/phase] reason`
 4. If confidence is low, still choose a best-fit route and include uncertainty in the reason.
 5. Delegate to the corresponding first-phase agent with concise context.
 

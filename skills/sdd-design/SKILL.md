@@ -3,8 +3,8 @@ name: sdd-design
 description: "Create technical design document with architecture decisions and approach. Trigger: When the orchestrator launches you to write or update the technical design for a change."
 license: MIT
 metadata:
-  author: gentleman-programming
-  version: "2.0"
+ author: gentleman-programming
+ version: "2.0"
 ---
 
 ## Purpose
@@ -18,7 +18,7 @@ From the orchestrator:
 
 ## Execution and Persistence Contract
 
-Persistence: this skill saves its artifact to ntcli via `ntcli_local_save` (see `_shared/persistence-contract.md` and `_shared/ntcli-convention.md`). Engram is NOT used.
+Persistence: this skill saves its artifact to flint via `flint_local_save` (see `_shared/persistence-contract.md` and `_shared/flint-convention.md`). Engram is NOT used.
 
 ## What to Do
 
@@ -66,9 +66,9 @@ How does this map to the proposal's approach? Reference specs.}
 {Describe how data moves through the system for this change.
 Use ASCII diagrams when helpful.}
 
-    Component A ──→ Component B ──→ Component C
-         │                              │
-         └──────── Store ───────────────┘
+  Component A ──→ Component B ──→ Component C
+     │               │
+     └──────── Store ───────────────┘
 
 ## File Changes
 
@@ -119,7 +119,7 @@ Return to the orchestrator:
 ## Design Created
 
 **Change**: {change-name}
-**Location**: ntcli `sdd/{change-name}/design`
+**Location**: flint `sdd/{change-name}/design`
 
 ### Summary
 - **Approach**: {one-line technical approach}

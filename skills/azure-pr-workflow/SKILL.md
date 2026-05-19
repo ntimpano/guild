@@ -3,8 +3,8 @@ name: azure-pr-workflow
 description: "Flujo operativo para crear y actualizar pull requests en Azure DevOps. Trigger: cuando se crea o actualiza un PR en Azure DevOps."
 license: Apache-2.0
 metadata:
-  author: gentleman-programming
-  version: "1.0"
+ author: gentleman-programming
+ version: "1.0"
 ---
 
 ## When to Use
@@ -16,33 +16,33 @@ metadata:
 ## Critical Patterns
 
 1. **Naming de branch alusivo y consistente**
-   - Formato recomendado: `feat/<work-item-id>-<descripcion-corta>` o `fix/<work-item-id>-<descripcion-corta>`.
-   - Siempre minúsculas y guiones.
+  - Formato recomendado: `feat/<work-item-id>-<descripcion-corta>` o `fix/<work-item-id>-<descripcion-corta>`.
+  - Siempre minúsculas y guiones.
 
 2. **Completar `pull_request_template.md` sin dejar secciones vacías**
-   - Problema / contexto.
-   - Alcance del cambio.
-   - Test plan real ejecutado.
-   - Riesgos y rollback.
+  - Problema / contexto.
+  - Alcance del cambio.
+  - Test plan real ejecutado.
+  - Riesgos y rollback.
 
 3. **Reviewer requerido antes de avanzar**
-   - Definir al menos 1 reviewer obligatorio (`required reviewer policy`).
-   - No pedir auto-approve ni merge sin revisión humana.
+  - Definir al menos 1 reviewer obligatorio (`required reviewer policy`).
+  - No pedir auto-approve ni merge sin revisión humana.
 
 4. **Link obligatorio a work items (US + tasks)**
-   - Vincular la User Story principal.
-   - Vincular tasks técnicas relacionadas.
-   - Verificar que el PR cierre/traccione los work items correctos.
+  - Vincular la User Story principal.
+  - Vincular tasks técnicas relacionadas.
+  - Verificar que el PR cierre/traccione los work items correctos.
 
 5. **Conflictos: resolver local, validar, y re-publicar**
-   - Rebase o merge desde target branch.
-   - Resolver conflicto archivo por archivo (sin aceptar todo ciego).
-   - Ejecutar tests/lint antes de `push`.
+  - Rebase o merge desde target branch.
+  - Resolver conflicto archivo por archivo (sin aceptar todo ciego).
+  - Ejecutar tests/lint antes de `push`.
 
 6. **Verificación post-merge obligatoria**
-   - Confirmar estado de pipeline.
-   - Confirmar cierre/transición de work items.
-   - Confirmar que el branch mergeado quedó alineado con target.
+  - Confirmar estado de pipeline.
+  - Confirmar cierre/transición de work items.
+  - Confirmar que el branch mergeado quedó alineado con target.
 
 ## Preflight Hard Gates (Blocking)
 

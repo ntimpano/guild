@@ -3,8 +3,8 @@ name: sdd-explore
 description: "Explore and investigate ideas before committing to a change. Trigger: When the orchestrator launches you to think through a feature, investigate the codebase, or clarify requirements."
 license: MIT
 metadata:
-  author: gentleman-programming
-  version: "2.0"
+ author: gentleman-programming
+ version: "2.0"
 ---
 
 ## Purpose
@@ -18,13 +18,13 @@ The orchestrator will give you:
 
 ## Execution and Persistence Contract
 
-Persistence: this skill saves its artifact to ntcli via `ntcli_local_save` (see `_shared/persistence-contract.md` and `_shared/ntcli-convention.md`). Engram is NOT used.
+Persistence: this skill saves its artifact to flint via `flint_local_save` (see `_shared/persistence-contract.md` and `_shared/flint-convention.md`). Engram is NOT used.
 
 ### Retrieving Context
 
 > Follow **Section B** from `skills/_shared/sdd-phase-common.md` for retrieval.
 
-- Use `ntcli_local_recall(query: "sdd-init/{project}")` for project context and optionally `ntcli_local_recall(query: "sdd/")` for existing artifacts.
+- Use `flint_local_recall(query: "sdd-init/{project}")` for project context and optionally `flint_local_recall(query: "sdd/")` for existing artifacts.
 - Use whatever additional context the orchestrator passed in the prompt.
 
 ## What to Do
@@ -89,14 +89,14 @@ Return EXACTLY this format to the orchestrator (and write the same content to `e
 
 ### Approaches
 1. **{Approach name}** — {brief description}
-   - Pros: {list}
-   - Cons: {list}
-   - Effort: {Low/Medium/High}
+  - Pros: {list}
+  - Cons: {list}
+  - Effort: {Low/Medium/High}
 
 2. **{Approach name}** — {brief description}
-   - Pros: {list}
-   - Cons: {list}
-   - Effort: {Low/Medium/High}
+  - Pros: {list}
+  - Cons: {list}
+  - Effort: {Low/Medium/High}
 
 ### Recommendation
 {Your recommended approach and why}

@@ -1,5 +1,5 @@
 ---
-description: Initialize SDD context — detects project stack and bootstraps ntcli memory
+description: Initialize SDD context — detects project stack and bootstraps flint memory
 agent: nt-leader
 subtask: true
 ---
@@ -11,11 +11,11 @@ CONTEXT:
 - Current project: !`echo -n "$(basename $(pwd))"`
 
 TASK:
-Initialize Spec-Driven Development in this project. Detect the tech stack, existing conventions, and architecture patterns. Persist the project context to ntcli (the only persistence backend in this stack).
+Initialize Spec-Driven Development in this project. Detect the tech stack, existing conventions, and architecture patterns. Persist the project context to flint (the only persistence backend in this stack).
 
 NTCLI PERSISTENCE (mandatory — Engram does NOT exist):
 After detecting the project context, save it:
-  ntcli_local_save(title: "sdd-init/{project}", topic_key: "sdd-init/{project}", type: "architecture", scope: "{project}", content: "{detected context}")
+ flint_local_save(title: "sdd-init/{project}", topic_key: "sdd-init/{project}", type: "architecture", scope: "{project}", content: "{detected context}")
 topic_key enables upserts — re-running init updates, not duplicates.
 Do NOT call mem_save or any mem_* tool.
 

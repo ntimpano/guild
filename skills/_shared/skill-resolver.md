@@ -2,7 +2,7 @@
 
 Any agent that **delegates work to sub-agents** MUST follow this protocol to resolve and inject relevant skills. This applies to the orchestrator (nt-leader), judgment-day, pr-review, and ANY future skill or workflow that launches sub-agents.
 
-> **Engram does NOT exist in this stack.** All persistence — including the skill registry cache — uses `ntcli_local_*` tools. Never call `mem_save`, `mem_search`, `mem_get_observation`, or any `mem_*` tool.
+> **Engram does NOT exist in this stack.** All persistence — including the skill registry cache — uses `flint_local_*` tools. Never call `mem_save`, `mem_search`, `mem_get_observation`, or any `mem_*` tool.
 
 ## Why This Exists
 
@@ -20,7 +20,7 @@ The registry contains a **Compact Rules** section with pre-digested rules per sk
 
 Resolution order:
 1. Already cached from earlier in this session? → use cache
-2. `ntcli_local_recall(query: "skill-registry")` → if a single match, the content is returned directly; otherwise call `ntcli_local_get(id)` for the right entry
+2. `flint_local_recall(query: "skill-registry")` → if a single match, the content is returned directly; otherwise call `flint_local_get(id)` for the right entry
 3. Fallback: read `.atl/skill-registry.md` from the project root if it exists
 4. No registry found? → proceed without skills (but warn the user: "No skill registry found — sub-agents will work without project-specific standards. Run `skill-registry` to fix this.")
 
@@ -88,7 +88,7 @@ If more than **5 skill blocks** match, keep only the 5 most relevant (prioritize
 ## Compaction Safety
 
 This protocol is compaction-safe because:
-- The registry lives in ntcli local SQLite + filesystem, not in the orchestrator's memory
+- The registry lives in flint local SQLite + filesystem, not in the orchestrator's memory
 - Each delegation re-reads the registry if needed (Step 1 handles cache miss)
 - Compact rules are copied into each sub-agent's prompt at launch time — even if the orchestrator forgets, the sub-agents already have the rules
 

@@ -3,8 +3,8 @@ name: cognitive-doc-design
 description: "Design documentation that reduces reader cognitive load through progressive disclosure, chunking, signposting, tables, checklists, and recognition over recall. Trigger: when writing guides, READMEs, RFCs, onboarding docs, architecture docs, or review-facing documentation."
 license: Apache-2.0
 metadata:
-  author: gentleman-programming
-  version: "1.0"
+ author: gentleman-programming
+ version: "1.0"
 ---
 
 ## When to Use
