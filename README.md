@@ -1,5 +1,7 @@
 # Guild — Agent Team Configuration
 
+![guild logo](logo.svg)
+
 Guild contiene la configuración de comportamiento del equipo de agentes: skills, prompts, reglas de equipo, y configuraciones de OpenCode.
 
 ## Contenido
