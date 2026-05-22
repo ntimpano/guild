@@ -99,9 +99,82 @@ These principles apply to **EVERY** agent in the Guild team. No exceptions.
 
 ---
 
-## 7) Golden Rule
+## 7) Tono en Todos los Contextos (Sin Excepciones)
 
-If there’s ambiguity in intent or context, ask first.
+### Reglas
+- **Idioma**: Siempre en español rioplatense (voseo, directo), a menos que el usuario hable en otro idioma.
+- **Verificación**: Antes de responder, corré:
+  ```bash
+  flint_recall --query "tono AGENTS.md" --all_projects true
+  ```
+- **Ejemplo**:
+  - ❌ *"I will proceed with the fix."* → Demasiado formal y en inglés.
+  - ✅ *"Voy a arreglar el script ahora mismo. Te aviso cuando esté listo."* → Tono correcto.
+
+---
+
+## 8) Errores de Tono (Cómo Evitarlos)
+
+| Error Común               | Causa                          | Solución                                                                                     |
+|---------------------------|--------------------------------|---------------------------------------------------------------------------------------------|
+| Responder en inglés       | Inercia del contexto técnico   | Usar `flint_recall` para recordar el tono antes de responder.                              |
+| Lenguaje demasiado formal | Olvido del voseo               | Releer el `AGENTS.md` y ajustar el tono.                                                    |
+| Respuestas largas         | Explicaciones innecesarias     | Cortar por lo sano. Si el usuario quiere detalles, que pregunte.                           |
+
+---
+
+## 9) Debugging Protocol (Obligatorio)
+
+### Reglas
+1. **Persistencia inmediata**:
+   - Guardá **cada paso de debugging** en Flint con `topic_key: session/{date}/debugging`.
+   - Usá `type: session-state` para notas temporales, `type: bug` para problemas confirmados.
+   - Ejemplo:
+     ```bash
+     local_save --title "Error de sintaxis en install-agents.sh" \
+                --topic_key "session/20260522/install-agents-debug" \
+                --type "bug" \
+                --content "Extra 'fi' en la línea 96. Causa: error de copy-paste."
+     ```
+
+2. **Terminal sin herramientas de Flint**:
+   - Si no podés usar `flint_local_*`, usá `local_save` (herramienta de Pi).
+   - Para notas largas, usá un archivo temporal y guardalo inmediatamente:
+     ```bash
+     echo "Pasos de debugging..." > /tmp/debug_notes.txt
+     local_save --content "$(cat /tmp/debug_notes.txt)" --title "Sesión de debugging" --topic_key "session/20260522/debug"
+     rm /tmp/debug_notes.txt
+     ```
+
+3. **Plantilla de debugging**:
+   - Siempre incluí:
+     - **Problema**: ¿Qué falló?
+     - **Causa raíz**: ¿Por qué falló?
+     - **Solución**: ¿Qué se hizo para arreglarlo?
+     - **Verificación**: ¿Cómo se probó el fix?
+
+---
+
+## 10) Persistence Checklist (Obligatorio)
+
+### Antes de actuar
+- [ ] Corré `flint_recall` o `local_recall` para recuperar contexto previo.
+- [ ] Si no hay contexto, creá una nota nueva con `topic_key: project/{area}/init`.
+
+### Durante el trabajo
+- [ ] Guardá **cada decisión, bug o hallazgo** inmediatamente.
+- [ ] Usá `topic_key` jerárquico (ej: `project/guild/agents/installation`).
+- [ ] Para debugging, usá `topic_key: session/{date}/debugging`.
+
+### Al terminar
+- [ ] Archivá la sesión con `guild-archivist` (si aplica).
+- [ ] Verificá las notas con `flint_list` o `local_list`.
+
+---
+
+## 11) Golden Rule
+
+Si hay ambigüedad de intención o de contexto, preguntá primero.
 
 ---
 
