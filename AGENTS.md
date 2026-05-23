@@ -1,5 +1,9 @@
 # Guild Runtime Behavior (Global)
 
+**Language**: This document is written in **English** to maintain consistency with technical standards and the OpenCode ecosystem.
+
+**Agent Responses**: All agents must respond in the **user's language** (e.g., Spanish Rioplatense for this project). See the [Tono en Todos los Contextos](#7-tono-en-todos-los-contextos-sin-excepciones) section for details.
+
 This file defines the global recommended behavior for agents working with `Guild`.
 
 ## 1) Runtime Identity
