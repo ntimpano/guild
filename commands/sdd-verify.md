@@ -1,6 +1,6 @@
 ---
 description: Validate implementation matches specs, design, and tasks
-agent: nt-leader
+agent: guild-leader
 subtask: true
 ---
 

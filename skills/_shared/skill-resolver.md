@@ -1,6 +1,6 @@
 # Skill Resolver — Universal Protocol
 
-Any agent that **delegates work to sub-agents** MUST follow this protocol to resolve and inject relevant skills. This applies to the orchestrator (nt-leader), judgment-day, pr-review, and ANY future skill or workflow that launches sub-agents.
+Any agent that **delegates work to sub-agents** MUST follow this protocol to resolve and inject relevant skills. This applies to the orchestrator (guild-leader), judgment-day, pr-review, and ANY future skill or workflow that launches sub-agents.
 
 > **Engram does NOT exist in this stack.** All persistence — including the skill registry cache — uses `flint_local_*` tools. Never call `mem_save`, `mem_search`, `mem_get_observation`, or any `mem_*` tool.
 
@@ -110,7 +110,7 @@ This prevents silent degradation where the orchestrator forgets skills after com
 
 ## Integration Points
 
-- **nt-leader orchestrator**: follows this protocol for ALL delegations (SDD and non-SDD)
+- **guild-leader orchestrator**: follows this protocol for ALL delegations (SDD and non-SDD)
 - **judgment-day**: follows this protocol before launching Judge A, Judge B, and Fix Agent
 - **pr-review**: already has internal skill loading — should migrate to this protocol for consistency
 - **Any future skill that delegates**: MUST reference this protocol

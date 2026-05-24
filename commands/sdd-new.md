@@ -1,6 +1,6 @@
 ---
 description: Start a new SDD change — runs exploration then creates a proposal
-agent: nt-leader
+agent: guild-leader
 ---
 
 Follow the SDD orchestrator workflow for starting a new change named "$ARGUMENTS".

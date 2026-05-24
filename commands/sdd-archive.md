@@ -1,6 +1,6 @@
 ---
 description: Archive a completed SDD change — records lineage in flint
-agent: nt-leader
+agent: guild-leader
 subtask: true
 ---
 

@@ -9,7 +9,7 @@
     }
   },
   "agent": {
-    "nt-leader": {
+    "guild-leader": {
       "tools": {
         "flint_local_backup": true,
         "flint_local_context": true,
@@ -33,7 +33,7 @@
         "flint_project_switch": true
       }
     },
-    "nt-spark": {
+    "guild-spark": {
       "tools": {
         "flint_local_backup": true,
         "flint_local_context": true,
@@ -57,7 +57,7 @@
         "flint_project_switch": true
       }
     },
-    "nt-creative-focus": {
+    "guild-creative-focus": {
       "tools": {
         "flint_local_backup": true,
         "flint_local_context": true,
@@ -81,7 +81,7 @@
         "flint_project_switch": true
       }
     },
-    "nt-creative-shape": {
+    "guild-creative-shape": {
       "tools": {
         "flint_local_backup": true,
         "flint_local_context": true,
@@ -105,7 +105,7 @@
         "flint_project_switch": true
       }
     },
-    "nt-creative-polish": {
+    "guild-creative-polish": {
       "tools": {
         "flint_local_backup": true,
         "flint_local_context": true,
@@ -129,7 +129,7 @@
         "flint_project_switch": true
       }
     },
-    "nt-creative-ship": {
+    "guild-creative-ship": {
       "tools": {
         "flint_local_backup": true,
         "flint_local_context": true,
@@ -153,7 +153,7 @@
         "flint_project_switch": true
       }
     },
-    "nt-strategy-diagnose": {
+    "guild-strategy-diagnose": {
       "tools": {
         "flint_local_backup": true,
         "flint_local_context": true,
@@ -177,7 +177,7 @@
         "flint_project_switch": true
       }
     },
-    "nt-strategy-options": {
+    "guild-strategy-options": {
       "tools": {
         "flint_local_backup": true,
         "flint_local_context": true,
@@ -201,7 +201,7 @@
         "flint_project_switch": true
       }
     },
-    "nt-strategy-decide": {
+    "guild-strategy-decide": {
       "tools": {
         "flint_local_backup": true,
         "flint_local_context": true,
@@ -225,7 +225,7 @@
         "flint_project_switch": true
       }
     },
-    "nt-strategy-communicate": {
+    "guild-strategy-communicate": {
       "tools": {
         "flint_local_backup": true,
         "flint_local_context": true,
@@ -249,7 +249,7 @@
         "flint_project_switch": true
       }
     },
-    "nt-strategy-track": {
+    "guild-strategy-track": {
       "tools": {
         "flint_local_backup": true,
         "flint_local_context": true,
@@ -273,7 +273,7 @@
         "flint_project_switch": true
       }
     },
-    "nt-research-gather": {
+    "guild-research-gather": {
       "tools": {
         "flint_local_backup": true,
         "flint_local_context": true,
@@ -297,7 +297,7 @@
         "flint_project_switch": true
       }
     },
-    "nt-research-synthesize": {
+    "guild-research-synthesize": {
       "tools": {
         "flint_local_backup": true,
         "flint_local_context": true,
@@ -321,7 +321,7 @@
         "flint_project_switch": true
       }
     },
-    "nt-research-challenge": {
+    "guild-research-challenge": {
       "tools": {
         "flint_local_backup": true,
         "flint_local_context": true,
@@ -345,7 +345,7 @@
         "flint_project_switch": true
       }
     },
-    "nt-research-conclude": {
+    "guild-research-conclude": {
       "tools": {
         "flint_local_backup": true,
         "flint_local_context": true,
@@ -369,7 +369,7 @@
         "flint_project_switch": true
       }
     },
-    "nt-research-document": {
+    "guild-research-document": {
       "tools": {
         "flint_local_backup": true,
         "flint_local_context": true,
@@ -393,7 +393,7 @@
         "flint_project_switch": true
       }
     },
-    "nt-sdd-apply": {
+    "guild-apply": {
       "tools": {
         "flint_local_backup": true,
         "flint_local_context": true,
@@ -417,7 +417,7 @@
         "flint_project_switch": true
       }
     },
-    "nt-sdd-archive": {
+    "guild-archive": {
       "tools": {
         "flint_local_backup": true,
         "flint_local_context": true,
@@ -441,7 +441,7 @@
         "flint_project_switch": true
       }
     },
-    "nt-sdd-design": {
+    "guild-design": {
       "tools": {
         "flint_local_backup": true,
         "flint_local_context": true,
@@ -465,7 +465,7 @@
         "flint_project_switch": true
       }
     },
-    "nt-sdd-explore": {
+    "guild-explore": {
       "tools": {
         "flint_local_backup": true,
         "flint_local_context": true,
@@ -489,7 +489,7 @@
         "flint_project_switch": true
       }
     },
-    "nt-sdd-init": {
+    "guild-init": {
       "tools": {
         "flint_local_backup": true,
         "flint_local_context": true,
@@ -513,7 +513,7 @@
         "flint_project_switch": true
       }
     },
-    "nt-sdd-onboard": {
+    "guild-onboard": {
       "tools": {
         "flint_local_backup": true,
         "flint_local_context": true,
@@ -537,7 +537,7 @@
         "flint_project_switch": true
       }
     },
-    "nt-sdd-propose": {
+    "guild-propose": {
       "tools": {
         "flint_local_backup": true,
         "flint_local_context": true,
@@ -561,7 +561,7 @@
         "flint_project_switch": true
       }
     },
-    "nt-sdd-spec": {
+    "guild-spec": {
       "tools": {
         "flint_local_backup": true,
         "flint_local_context": true,
@@ -585,7 +585,7 @@
         "flint_project_switch": true
       }
     },
-    "nt-sdd-tasks": {
+    "guild-tasks": {
       "tools": {
         "flint_local_backup": true,
         "flint_local_context": true,
@@ -609,7 +609,7 @@
         "flint_project_switch": true
       }
     },
-    "nt-sdd-verify": {
+    "guild-verify": {
       "tools": {
         "flint_local_backup": true,
         "flint_local_context": true,

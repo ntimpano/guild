@@ -1,6 +1,6 @@
 ---
 description: Initialize SDD context — detects project stack and bootstraps flint memory
-agent: nt-leader
+agent: guild-leader
 subtask: true
 ---
 

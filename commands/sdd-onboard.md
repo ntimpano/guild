@@ -1,6 +1,6 @@
 ---
 description: Guided SDD walkthrough — onboard a user through the full SDD cycle using their real codebase
-agent: nt-leader
+agent: guild-leader
 subtask: true
 ---
 

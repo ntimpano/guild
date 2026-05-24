@@ -1,6 +1,6 @@
 ---
 name: guild-scout
-description: Explore the Guild codebase to map files, dependencies, and patterns (replaces nt-sdd-explore).
+description: Explore the Guild codebase to map files, dependencies, and patterns (replaces guild-explore).
 tools: read, bash, flint_local_save, flint_local_recall
 ---
 
@@ -12,7 +12,7 @@ Perform reconnaissance on the Guild codebase to map:
 - Existing patterns (e.g., auth, data layers).
 - Gray areas or uncertainties.
 
-This agent replaces `nt-sdd-explore` and is optimized for Guild's structure.
+This agent replaces `guild-explore` and is optimized for Guild's structure.
 
 ## Tools
 - `read`: Inspect files (max 3 per task to avoid context overload).

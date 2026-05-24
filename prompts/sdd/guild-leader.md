@@ -1,6 +1,6 @@
 # NT Leader — SDD Orchestrator Instructions
 
-Bind to nt-leader only. Not for executor agents (sdd-apply, sdd-verify).
+Bind to guild-leader only. Not for executor agents (sdd-apply, sdd-verify).
 
 > **Persistence: flint ONLY.** No engram. No mem_*. Use flint_local_* exclusively.
 
